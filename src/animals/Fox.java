@@ -2,11 +2,8 @@ package animals;
 
 import field.Field;
 import field.Location;
-import utils.Randomizer;
 
 import java.util.List;
-import java.util.Iterator;
-import java.util.Random;
 
 /**
  * A simple model of a fox.
@@ -26,14 +23,9 @@ public class Fox extends Predator {
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a fox can go before it has to eat again.
-    private static final int RABBIT_FOOD_VALUE = 9;
-    // A shared random number generator to control breeding.
-    private static final Random rand = Randomizer.getRandom();
 
-    // The fox's food level, which is increased by eating rabbits.
-//    private int foodLevel;
+    private Field field;
+    private Location location;
 
 
     /**
@@ -45,47 +37,10 @@ public class Fox extends Predator {
      * @param location  The location within the field.
      */
     public Fox(boolean randomAge, Field field, Location location) {
-        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE, RABBIT_FOOD_VALUE);
-//        if(randomAge) {
-//            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
-//        }
-//        else {
-//            foodLevel = RABBIT_FOOD_VALUE;
-//        }
-    }
+        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
 
-//    /**
-//     * This is what the fox does most of the time: it hunts for
-//     * rabbits. In the process, it might breed, die of hunger,
-//     * or die of old age.
-//     *
-//     * @param newFoxes A list to return newly born foxes.
-//     */
-//    public void act(List<Animal> newFoxes) {
-//        incrementAge();
-//        incrementHunger();
-//        if (isAlive()) {
-//            giveBirth(newFoxes);
-//            // Move towards a source of food if found.
-//            Location newLocation = findFood();
-//            if (newLocation == null) {
-//                // No food found - try to move to a free location.
-//                newLocation = getField().freeAdjacentLocation(getLocation());
-//            }
-//            // See if it was possible to move.
-//            if (newLocation != null) {
-//                setLocation(newLocation);
-//            } else {
-//                // Overcrowding.
-//                setDead();
-//            }
-//        }
-//    }
-
-
-    @Override
-    protected void giveBirth(List<Animal> newAnimals, AnimalCreator creator) {
-        super.giveBirth(newAnimals, (field, location) -> new Fox(false, field, location));
+        this.field = field;
+        this.location = location;
     }
 
     /**
@@ -94,7 +49,8 @@ public class Fox extends Predator {
      *
      * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newFoxes) {
-        super.giveBirth(newFoxes, );
+    @Override
+    protected void giveBirth(List<Animal> newFoxes) {
+        super.giveBirth(newFoxes, () -> new Fox(false, this.field, this.location));
     }
 }
