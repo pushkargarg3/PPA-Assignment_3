@@ -5,7 +5,7 @@ import field.Location;
 
 import java.util.List;
 
-public class Predator extends Animal {
+public abstract class Predator extends Animal {
 
     private int foodLevel;
 
@@ -27,8 +27,7 @@ public class Predator extends Animal {
             double breedingProbability,
             int maxLitterSize,
             int maxAge,
-            int breedingAge,
-            int foodLevel) {
+            int breedingAge) {
         super(isRandomAge, field, location, breedingProbability, maxLitterSize, maxAge, breedingAge);
     }
 
@@ -82,7 +81,7 @@ public class Predator extends Animal {
                 Rabbit rabbit = (Rabbit) animal;
                 if (rabbit.isAlive()) {
                     rabbit.setDead();
-                    foodLevel = RABBIT_FOOD_VALUE;
+                    foodLevel = FoodLevels.RABBIT_FOOD_VALUE.getFoodLevel();
                     return where;
                 }
             }
@@ -90,8 +89,5 @@ public class Predator extends Animal {
         return null;
     }
 
-    @Override
-    protected void giveBirth(List<Animal> newAnimals, AnimalCreator creator) {
-        super.giveBirth(newAnimals, creator);
-    }
+    protected abstract void giveBirth(List<Animal> newAnimals);
 }

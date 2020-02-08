@@ -139,7 +139,7 @@ public abstract class Animal {
         int births = breed();
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Animal young = creator.create(field, loc);
+            Animal young = creator.create();
             newAnimals.add(young);
         }
     }
