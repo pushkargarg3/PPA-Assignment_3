@@ -27,6 +27,8 @@ public class Rabbit extends Animal
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
 
+    private final int RABBIT_FOOD_VALUE = 9;
+
     // Individual characteristics (instance fields).
 
     /**
@@ -62,6 +64,15 @@ public class Rabbit extends Animal
                 setDead();
             }
         }
+    }
+
+    /**
+     *
+     * @return returns the default food level of the rabbit
+     */
+    @Override
+    protected int getFoodLevel() {
+        return RABBIT_FOOD_VALUE;
     }
 
     /**

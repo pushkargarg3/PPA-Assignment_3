@@ -165,6 +165,8 @@ public abstract class Animal {
     private boolean canBreed() {
         return age >= breedingAge;
     }
+
+    protected abstract int getFoodLevel();
 }
 
 
