@@ -24,9 +24,6 @@ public class Fox extends Predator {
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
-    private Field field;
-    private Location location;
-
 
     /**
      * Create a fox. A fox can be created as a new born (age zero
@@ -38,9 +35,11 @@ public class Fox extends Predator {
      */
     public Fox(boolean randomAge, Field field, Location location) {
         super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+    }
 
-        this.field = field;
-        this.location = location;
+    @Override
+    protected boolean canEatAnimal(Object animal) {
+        return animal instanceof Rabbit;
     }
 
     /**
@@ -52,5 +51,14 @@ public class Fox extends Predator {
     @Override
     protected void giveBirth(List<Animal> newFoxes) {
         super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location));
+    }
+
+    /**
+     *
+     * @return default food level of fox.
+     */
+    @Override
+    protected int getFoodLevel() {
+        return 0;
     }
 }

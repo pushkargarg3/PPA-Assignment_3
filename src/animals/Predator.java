@@ -12,13 +12,13 @@ public abstract class Predator extends Animal {
     /**
      * Create a new animal at location in field.
      *
-     * @param isRandomAge
+     * @param isRandomAge         If the age should be randomly assigned
      * @param field               The field currently occupied.
      * @param location            The location within the field.
-     * @param breedingProbability
-     * @param maxLitterSize
-     * @param maxAge
-     * @param breedingAge
+     * @param breedingProbability The probability to breed
+     * @param maxLitterSize       The maximum number of children
+     * @param maxAge              The maximum age of the predator
+     * @param breedingAge         The minimum age of breeding
      */
     public Predator(
             boolean isRandomAge,
@@ -33,23 +33,21 @@ public abstract class Predator extends Animal {
     }
 
     @Override
-    public void act(List<Animal> newAnimals)
-    {
+    public void act(List<Animal> newAnimals) {
         incrementAge();
         incrementHunger();
-        if(isAlive()) {
+        if (isAlive()) {
             giveBirth(newAnimals);
             // Move towards a source of food if found.
             Location newLocation = findFood();
-            if(newLocation == null) {
+            if (newLocation == null) {
                 // No food found - try to move to a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
             }
             // See if it was possible to move.
-            if(newLocation != null) {
+            if (newLocation != null) {
                 setLocation(newLocation);
-            }
-            else {
+            } else {
                 // Overcrowding.
                 setDead();
             }
@@ -59,10 +57,9 @@ public abstract class Predator extends Animal {
     /**
      * Make this fox more hungry. This could result in the fox's death.
      */
-    private void incrementHunger()
-    {
+    private void incrementHunger() {
         foodLevel--;
-        if(foodLevel <= 0) {
+        if (foodLevel <= 0) {
             setDead();
         }
     }
@@ -70,25 +67,27 @@ public abstract class Predator extends Animal {
     /**
      * Look for rabbits adjacent to the current location.
      * Only the first live rabbit is eaten.
+     *
      * @return Where food was found, or null if it wasn't.
      */
-    private Location findFood()
-    {
+    private Location findFood() {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         for (Location where : adjacent) {
-            Object animal = field.getObjectAt(where);
-            if (animal instanceof Rabbit) {
-                Rabbit rabbit = (Rabbit) animal;
-                if (rabbit.isAlive()) {
-                    rabbit.setDead();
-                    foodLevel = FoodLevels.RABBIT_FOOD_VALUE.getFoodLevel();
+            Object animalObj = field.getObjectAt(where);
+            if (canEatAnimal(animalObj)) {
+                Animal animal = (Animal) animalObj;
+                if (animal.isAlive()) {
+                    animal.setDead();
+                    foodLevel = animal.getFoodLevel();
                     return where;
                 }
             }
         }
         return null;
     }
+
+    protected abstract boolean canEatAnimal(Object animal);
 
     protected abstract void giveBirth(List<Animal> newAnimals);
 }
