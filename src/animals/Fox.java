@@ -51,6 +51,6 @@ public class Fox extends Predator {
      */
     @Override
     protected void giveBirth(List<Animal> newFoxes) {
-        super.giveBirth(newFoxes, () -> new Fox(false, this.field, this.location));
+        super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location));
     }
 }

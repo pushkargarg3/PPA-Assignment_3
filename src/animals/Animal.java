@@ -46,24 +46,27 @@ public abstract class Animal {
     public Animal(
             boolean isRandomAge,
             Field field,
-                  Location location,
-                  double breedingProbability,
-                  int maxLitterSize,
-                  int maxAge,
-                  int breedingAge) {
+            Location location,
+            double breedingProbability,
+            int maxLitterSize,
+            int maxAge,
+            int breedingAge) {
         alive = true;
         this.field = field;
         setLocation(location);
+
+        // Animal specific options
         this.breedingProbability = breedingProbability;
         this.maxLitterSize = maxLitterSize;
         this.maxAge = maxAge;
         this.breedingAge = breedingAge;
 
+
         this.setAge(isRandomAge);
     }
 
     private void setAge(boolean isRandomAge) {
-        if(isRandomAge) {
+        if (isRandomAge) {
             age = rand.nextInt(maxAge);
         } else {
             age = 0;
@@ -139,7 +142,7 @@ public abstract class Animal {
         int births = breed();
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Animal young = creator.create();
+            Animal young = creator.create(field, loc);
             newAnimals.add(young);
         }
     }
@@ -157,7 +160,6 @@ public abstract class Animal {
             births = rand.nextInt(maxLitterSize) + 1;
         }
         return births;
-
     }
 
     private boolean canBreed() {
