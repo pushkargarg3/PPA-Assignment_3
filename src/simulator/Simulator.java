@@ -1,8 +1,6 @@
 package simulator;
 
-import animals.Animal;
-import animals.Fox;
-import animals.Rabbit;
+import animals.*;
 import field.Field;
 import field.Location;
 import utils.Randomizer;
@@ -30,8 +28,13 @@ public class Simulator
     // The probability that a fox will be created in any given grid position.
     private static final double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
-
+    private static final double RABBIT_CREATION_PROBABILITY = 0.05;
+    // The probability that a deer will be created in any given grid position.
+    private static final double DEER_CREATION_PROBABILITY = 0.04;
+    // The probability that a tiger will be created in any given grid position.
+    private static final double TIGER_CREATION_PROBABILITY = 0.02;
+    // The probability that a tiger will be created in any given grid position.
+    private static final double RAT_CREATION_PROBABILITY = 0.08;
     // List of animals in the field.
     private List<Animal> animals;
     // The current state of the field.
@@ -70,6 +73,8 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.ORANGE);
         view.setColor(Fox.class, Color.BLUE);
+        view.setColor(Deer.class, Color.YELLOW);
+        view.setColor(Rat.class, Color.RED);
         
         // Setup a valid starting point.
         reset();
@@ -154,6 +159,21 @@ public class Simulator
                     Location location = new Location(row, col);
                     Animal rabbit = new Rabbit(true, field, location);
                     animals.add(rabbit);
+                }
+                else if(rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Animal deer = new Deer(true, field, location);
+                    animals.add(deer);
+                }
+                else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Animal tiger = new Tiger(true, field, location);
+                    animals.add(tiger);
+                }
+                else if(rand.nextDouble() <= RAT_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Animal rat = new Rat(true, field, location);
+                    animals.add(rat);
                 }
                 // else leave the location empty.
             }

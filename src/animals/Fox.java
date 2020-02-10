@@ -39,7 +39,7 @@ public class Fox extends Predator {
 
     @Override
     protected boolean canEatAnimal(Object animal) {
-        return animal instanceof Rabbit;
+        return animal instanceof Rabbit || animal instanceof Rat;
     }
 
     /**
@@ -54,7 +54,6 @@ public class Fox extends Predator {
     }
 
     /**
-     *
      * @return default food level of fox.
      */
     @Override

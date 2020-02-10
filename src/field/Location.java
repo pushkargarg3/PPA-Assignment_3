@@ -17,6 +17,7 @@ public class Location
      * @param row The row.
      * @param col The column.
      */
+
     public Location(int row, int col)
     {
         this.row = row;
