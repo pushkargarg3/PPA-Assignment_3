@@ -24,6 +24,9 @@ public class SimulatorView extends JFrame
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
 
+    // Color used during the night time
+    private static final Color NIGHT_COLOR = Color.black;
+
     // Color used for objects that have no defined color.
     private static final Color UNKNOWN_COLOR = Color.gray;
 
@@ -36,6 +39,9 @@ public class SimulatorView extends JFrame
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
+
+    // Current color which is used for the backgroudn
+    private Color currentColor;
 
     /**
      * Create a view of the given width and height.
@@ -66,6 +72,7 @@ public class SimulatorView extends JFrame
         contents.add(population, BorderLayout.SOUTH);
         pack();
         setVisible(true);
+        currentColor = EMPTY_COLOR;
     }
     
     /**
@@ -125,7 +132,7 @@ public class SimulatorView extends JFrame
                     fieldView.drawMark(col, row, getColor(animal.getClass()));
                 }
                 else {
-                    fieldView.drawMark(col, row, EMPTY_COLOR);
+                    fieldView.drawMark(col, row, currentColor);
                 }
             }
         }
@@ -133,6 +140,13 @@ public class SimulatorView extends JFrame
 
         population.setText(POPULATION_PREFIX + stats.getPopulationDetails(field));
         fieldView.repaint();
+    }
+
+    public void setNight(boolean night) {
+        if (night)
+            currentColor = NIGHT_COLOR;
+        else
+            currentColor = EMPTY_COLOR;
     }
 
     /**

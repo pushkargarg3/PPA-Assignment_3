@@ -37,6 +37,11 @@ public abstract class Animal {
     // The age of the animal
     private int age;
 
+    private boolean isMale;
+
+    // Indicates what time of the day is now
+    private boolean isNight;
+
     /**
      * Create a new animal at location in field.
      *
@@ -47,6 +52,7 @@ public abstract class Animal {
             boolean isRandomAge,
             Field field,
             Location location,
+            boolean isMale,
             double breedingProbability,
             int maxLitterSize,
             int maxAge,
@@ -60,7 +66,6 @@ public abstract class Animal {
         this.maxLitterSize = maxLitterSize;
         this.maxAge = maxAge;
         this.breedingAge = breedingAge;
-
 
         this.setAge(isRandomAge);
     }
@@ -134,6 +139,10 @@ public abstract class Animal {
         return field;
     }
 
+    public boolean isMale() {
+        return isMale;
+    }
+
     protected void giveBirth(List<Animal> newAnimals, AnimalCreator creator) {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -145,6 +154,14 @@ public abstract class Animal {
             Animal young = creator.create(field, loc);
             newAnimals.add(young);
         }
+    }
+
+    public void setDayTime(boolean isNight) {
+        this.isNight = isNight;
+    }
+
+    protected boolean isNight() {
+        return this.isNight;
     }
 
     protected void incrementAge() {

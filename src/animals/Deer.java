@@ -3,6 +3,7 @@ package animals;
 import field.Field;
 import field.Location;
 import java.util.List;
+import java.util.Random;
 
 public class Deer extends Animal
 {
@@ -13,13 +14,15 @@ public class Deer extends Animal
     // The age to which a deer can live.
     private static final int MAX_AGE = 55;
     // The likelihood of a deer breeding.
-    private static final double BREEDING_PROBABILITY = 0.06;
+    private static final double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
     private final int DEER_FOOD_VALUE = 18;
 
     // Individual characteristics (instance fields).
+
+    private Random random;
 
     /**
      * Create a new deer. A deer may be created with age
@@ -29,9 +32,10 @@ public class Deer extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Deer(boolean randomAge, Field field, Location location)
+    public Deer(boolean randomAge, Field field, Location location, boolean isMale)
     {
-        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        random = new Random();
     }
 
     /**
@@ -45,6 +49,9 @@ public class Deer extends Animal
         if(isAlive()) {
             giveBirth(newDeers);
             // Try to move into a free location.
+            if(this.isNight()) {
+                return;
+            }
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
                 setLocation(newLocation);
@@ -71,8 +78,16 @@ public class Deer extends Animal
      * @param newDeers A list to return newly born deers.
      */
     private void giveBirth(List<Animal> newDeers) {
-        AnimalCreator creator = (field, location) -> new Deer(false, field, location);
+        Field currentField = getField();
+        List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
-        super.giveBirth(newDeers, creator);
+        for (Location where : adjacent) {
+            Object animal = getField().getObjectAt(where);
+            if (animal instanceof Deer && ((Deer) animal).isMale() != this.isMale()) {
+                AnimalCreator creator = (field, location) -> new Deer(false, field, location, random.nextBoolean());
+
+                super.giveBirth(newDeers, creator);
+            }
+        }
     }
 }
