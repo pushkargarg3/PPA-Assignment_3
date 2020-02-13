@@ -15,6 +15,7 @@ public abstract class Predator extends Animal {
      * @param isRandomAge         If the age should be randomly assigned
      * @param field               The field currently occupied.
      * @param location            The location within the field.
+     * @param isMale              SHows if the predator is male or not
      * @param breedingProbability The probability to breed
      * @param maxLitterSize       The maximum number of children
      * @param maxAge              The maximum age of the predator
@@ -24,11 +25,12 @@ public abstract class Predator extends Animal {
             boolean isRandomAge,
             Field field,
             Location location,
+            boolean isMale,
             double breedingProbability,
             int maxLitterSize,
             int maxAge,
             int breedingAge) {
-        super(isRandomAge, field, location, breedingProbability, maxLitterSize, maxAge, breedingAge);
+        super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge);
         foodLevel = FoodLevels.RABBIT_FOOD_VALUE.getFoodLevel();
     }
 
@@ -37,7 +39,9 @@ public abstract class Predator extends Animal {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
-            giveBirth(newAnimals);
+            Field field = getField();
+            List<Location> adjacent = field.adjacentLocations(getLocation());
+            giveBirth(newAnimals, adjacent);
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if (newLocation == null) {
@@ -89,5 +93,5 @@ public abstract class Predator extends Animal {
 
     protected abstract boolean canEatAnimal(Object animal);
 
-    protected abstract void giveBirth(List<Animal> newAnimals);
+    protected abstract void giveBirth(List<Animal> newAnimals, List<Location> adjacentLocations);
 }

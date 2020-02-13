@@ -4,6 +4,7 @@ import field.Field;
 import field.Location;
 
 import java.util.List;
+import java.util.Random;
 
 public class Rat extends Animal {
     // Characteristics shared by all rats (class variables).
@@ -13,21 +14,24 @@ public class Rat extends Animal {
     // The age to which a rat can live.
     private static final int MAX_AGE = 8;
     // The likelihood of a rat breeding.
-    private static final double BREEDING_PROBABILITY = 0.1;
+    private static final double BREEDING_PROBABILITY = 0.20;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 5;
 
     private final int RAT_FOOD_VALUE = 2;
 
+    private Random random;
+
     /**
      * Create a new animal at location in field.
      *
-     * @param randomAge
+     * @param randomAge           Shows if the Rat should have a random age
      * @param field               The field currently occupied.
      * @param location            The location within the field.
      */
-    public Rat(boolean randomAge, Field field, Location location) {
-        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+    public Rat(boolean randomAge, Field field, Location location, boolean isMale) {
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        random = new Random();
     }
 
 
@@ -68,8 +72,16 @@ public class Rat extends Animal {
      * @param newRats A list to return newly born rats.
      */
     private void giveBirth(List<Animal> newRats) {
-        AnimalCreator creator = (field, location) -> new Rat(false, field, location);
+        Field currentField = getField();
+        List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
-        super.giveBirth(newRats, creator);
+        for (Location where : adjacent) {
+            Object animal = getField().getObjectAt(where);
+            if (animal instanceof Rat && ((Rat) animal).isMale() != this.isMale()) {
+                AnimalCreator creator = (field, location) -> new Rat(false, field, location, random.nextBoolean());
+
+                super.giveBirth(newRats, creator);
+            }
+        }
     }
 }

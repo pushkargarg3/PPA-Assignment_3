@@ -3,6 +3,7 @@ package animals;
 import field.Field;
 import field.Location;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -21,13 +22,15 @@ public class Rabbit extends Animal
     // The age to which a rabbit can live.
     private static final int MAX_AGE = 20;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.1;
+    private static final double BREEDING_PROBABILITY = 0.20;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
 
     private final int RABBIT_FOOD_VALUE = 9;
 
     // Individual characteristics (instance fields).
+
+    Random random;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -37,9 +40,10 @@ public class Rabbit extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Rabbit(boolean randomAge, Field field, Location location)
+    public Rabbit(boolean randomAge, Field field, Location location, boolean isMale)
     {
-        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        random = new Random();
     }
 
     /**
@@ -53,6 +57,9 @@ public class Rabbit extends Animal
         if(isAlive()) {
             giveBirth(newRabbits);
             // Try to move into a free location.
+            if(isNight())
+                return;
+
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
                 setLocation(newLocation);
@@ -80,8 +87,16 @@ public class Rabbit extends Animal
      */
     private void giveBirth(List<Animal> newRabbits)
     {
-        AnimalCreator creator = (field, location) -> new Rabbit(false, field, location);
+        Field currentField = getField();
+        List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
-        super.giveBirth(newRabbits, creator);
+        for (Location where : adjacent) {
+            Object animal = getField().getObjectAt(where);
+            if (animal instanceof Rabbit && ((Rabbit) animal).isMale() != this.isMale()) {
+                AnimalCreator creator = (field, location) -> new Rabbit(false, field, location, random.nextBoolean());
+
+                super.giveBirth(newRabbits, creator);
+            }
+        }
     }
 }

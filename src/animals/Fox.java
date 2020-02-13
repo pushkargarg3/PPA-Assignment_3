@@ -3,7 +3,9 @@ package animals;
 import field.Field;
 import field.Location;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple model of a fox.
@@ -20,10 +22,11 @@ public class Fox extends Predator {
     // The age to which a fox can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static final double BREEDING_PROBABILITY = 0.16;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
+    private Random random;
 
     /**
      * Create a fox. A fox can be created as a new born (age zero
@@ -33,8 +36,9 @@ public class Fox extends Predator {
      * @param field     The field currently occupied.
      * @param location  The location within the field.
      */
-    public Fox(boolean randomAge, Field field, Location location) {
-        super(randomAge, field, location, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+    public Fox(boolean randomAge, Field field, Location location, boolean isMale) {
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        random = new Random();
     }
 
     @Override
@@ -49,8 +53,12 @@ public class Fox extends Predator {
      * @param newFoxes A list to return newly born foxes.
      */
     @Override
-    protected void giveBirth(List<Animal> newFoxes) {
-        super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location));
+    protected void giveBirth(List<Animal> newFoxes, List<Location> adjacentLocations) {
+        for (Location where : adjacentLocations) {
+            Object animal = getField().getObjectAt(where);
+            if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale())
+                super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location, random.nextBoolean()));
+        }
     }
 
     /**
