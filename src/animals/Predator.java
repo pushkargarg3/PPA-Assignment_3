@@ -31,7 +31,8 @@ public abstract class Predator extends Animal {
             int maxAge,
             int breedingAge) {
         super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge);
-        foodLevel = FoodLevels.RABBIT_FOOD_VALUE.getFoodLevel();
+        // TODO: Somehow we should get initial food level??
+        foodLevel = 15;
     }
 
     @Override

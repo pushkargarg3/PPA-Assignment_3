@@ -25,9 +25,9 @@ public class Simulator {
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.08;
+    private static final double FOX_CREATION_PROBABILITY = 0.06;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.01;
+    private static final double RABBIT_CREATION_PROBABILITY = 0.16;
     // The probability that a deer will be created in any given grid position.
     private static final double DEER_CREATION_PROBABILITY = 0.08;
     // The probability that a tiger will be created in any given grid position.
@@ -75,6 +75,7 @@ public class Simulator {
         view.setColor(Fox.class, Color.BLUE);
         view.setColor(Deer.class, Color.YELLOW);
         view.setColor(Rat.class, Color.RED);
+        view.setColor(Tiger.class, Color.CYAN);
 
         isNight = false;
 
@@ -99,7 +100,7 @@ public class Simulator {
     public void simulate(int numSteps) {
         for (int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            delay(60);   // uncomment this to run more slowly
+            delay(1000);   // uncomment this to run more slowly
         }
     }
 

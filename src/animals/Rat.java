@@ -14,7 +14,7 @@ public class Rat extends Animal {
     // The age to which a rat can live.
     private static final int MAX_AGE = 8;
     // The likelihood of a rat breeding.
-    private static final double BREEDING_PROBABILITY = 0.20;
+    private static final double BREEDING_PROBABILITY = 0.11;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 5;
 

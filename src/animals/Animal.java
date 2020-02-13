@@ -67,6 +67,8 @@ public abstract class Animal {
         this.maxAge = maxAge;
         this.breedingAge = breedingAge;
 
+        this.isMale = isMale;
+
         this.setAge(isRandomAge);
     }
 
