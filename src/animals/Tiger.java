@@ -1,12 +1,13 @@
 package animals;
 
+import animals.prey.Deer;
 import field.Field;
 import field.Location;
 
 import java.util.List;
 import java.util.Random;
 
-public class Tiger extends Predator {
+public class Tiger extends Eater {
 
     // The age at which a fox can start to breed.
     private static final int BREEDING_AGE = 15;
@@ -33,12 +34,12 @@ public class Tiger extends Predator {
     }
 
     @Override
-    protected boolean canEatAnimal(Object animal) {
+    protected boolean canEatCreature(Object animal) {
         return animal instanceof Deer;
     }
 
     @Override
-    protected void giveBirth(List<Animal> newTigers, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Creature> newTigers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale())

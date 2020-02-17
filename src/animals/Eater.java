@@ -5,7 +5,7 @@ import field.Location;
 
 import java.util.List;
 
-public abstract class Predator extends Animal {
+public abstract class Eater extends Creature {
 
     private int foodLevel;
 
@@ -21,7 +21,7 @@ public abstract class Predator extends Animal {
      * @param maxAge              The maximum age of the predator
      * @param breedingAge         The minimum age of breeding
      */
-    public Predator(
+    public Eater(
             boolean isRandomAge,
             Field field,
             Location location,
@@ -36,13 +36,11 @@ public abstract class Predator extends Animal {
     }
 
     @Override
-    public void act(List<Animal> newAnimals) {
+    public void act(List<Creature> newCreatures) {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
-            Field field = getField();
-            List<Location> adjacent = field.adjacentLocations(getLocation());
-            giveBirth(newAnimals, adjacent);
+            giveBirth(newCreatures, getLocationList());
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if (newLocation == null) {
@@ -62,7 +60,7 @@ public abstract class Predator extends Animal {
     /**
      * Make this fox more hungry. This could result in the fox's death.
      */
-    private void incrementHunger() {
+    protected void incrementHunger() {
         foodLevel--;
         if (foodLevel <= 0) {
             setDead();
@@ -75,16 +73,14 @@ public abstract class Predator extends Animal {
      *
      * @return Where food was found, or null if it wasn't.
      */
-    private Location findFood() {
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        for (Location where : adjacent) {
-            Object animalObj = field.getObjectAt(where);
-            if (canEatAnimal(animalObj)) {
-                Animal animal = (Animal) animalObj;
-                if (animal.isAlive()) {
-                    animal.setDead();
-                    foodLevel = animal.getFoodLevel();
+    protected Location findFood() {
+        for (Location where : getLocationList()) {
+            Object animalObj = getField().getObjectAt(where);
+            if (canEatCreature(animalObj)) {
+                Creature creature = (Creature) animalObj;
+                if (creature.isAlive()) {
+                    creature.setDead();
+                    foodLevel = creature.getFoodLevel();
                     return where;
                 }
             }
@@ -92,7 +88,12 @@ public abstract class Predator extends Animal {
         return null;
     }
 
-    protected abstract boolean canEatAnimal(Object animal);
+    private List<Location> getLocationList() {
+        Field field = getField();
+        return field.adjacentLocations(getLocation());
+    }
 
-    protected abstract void giveBirth(List<Animal> newAnimals, List<Location> adjacentLocations);
+    protected abstract boolean canEatCreature(Object animal);
+
+    protected abstract void giveBirth(List<Creature> newCreatures, List<Location> adjacentLocations);
 }

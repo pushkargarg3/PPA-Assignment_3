@@ -1,6 +1,10 @@
 package simulator;
 
 import animals.*;
+import animals.prey.Deer;
+import animals.prey.Plant;
+import animals.prey.Rabbit;
+import animals.prey.Rat;
 import field.Field;
 import field.Location;
 import utils.Randomizer;
@@ -25,17 +29,19 @@ public class Simulator {
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.06;
+    private static final double FOX_CREATION_PROBABILITY = 0.03;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.16;
     // The probability that a deer will be created in any given grid position.
-    private static final double DEER_CREATION_PROBABILITY = 0.08;
+    private static final double DEER_CREATION_PROBABILITY = 0.15;
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.04;
     // The probability that a tiger will be created in any given grid position.
-    private static final double RAT_CREATION_PROBABILITY = 0.16;
+    private static final double RAT_CREATION_PROBABILITY = 0.10;
+    // The probability that a plant will be created in any given grid position.
+    private static final double PLANT_CREATION_PROBABILITY = 0.20;
     // List of animals in the field.
-    private List<Animal> animals;
+    private List<Creature> creatures;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -66,16 +72,17 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        animals = new ArrayList<>();
+        creatures = new ArrayList<>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.ORANGE);
-        view.setColor(Fox.class, Color.BLUE);
         view.setColor(Deer.class, Color.YELLOW);
         view.setColor(Rat.class, Color.RED);
+        view.setColor(Fox.class, Color.BLUE);
         view.setColor(Tiger.class, Color.CYAN);
+        view.setColor(Plant.class, Color.GREEN);
 
         isNight = false;
 
@@ -100,7 +107,7 @@ public class Simulator {
     public void simulate(int numSteps) {
         for (int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            delay(1000);   // uncomment this to run more slowly
+//            delay(1000);   // uncomment this to run more slowly
         }
     }
 
@@ -113,25 +120,27 @@ public class Simulator {
         step++;
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();
+        List<Creature> newCreatures = new ArrayList<>();
 
+        // On every 20th run change the day time
         if (step % 20 == 0) {
             isNight = !isNight;
             view.setNight(isNight);
         }
-        // Let all rabbits act.
-        for (Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
-            Animal animal = it.next();
 
-            animal.setDayTime(isNight);
-            animal.act(newAnimals);
-            if (!animal.isAlive()) {
+        // Let all creatures act.
+        for (Iterator<Creature> it = creatures.iterator(); it.hasNext(); ) {
+            Creature creature = it.next();
+
+            creature.setDayTime(isNight);
+            creature.act(newCreatures);
+            if (!creature.isAlive()) {
                 it.remove();
             }
         }
 
         // Add the newly born foxes and rabbits to the main lists.
-        animals.addAll(newAnimals);
+        creatures.addAll(newCreatures);
 
         view.showStatus(step, field);
     }
@@ -141,7 +150,7 @@ public class Simulator {
      */
     public void reset() {
         step = 0;
-        animals.clear();
+        creatures.clear();
         populate();
 
         // Show the starting state in the view.
@@ -156,27 +165,36 @@ public class Simulator {
         field.clear();
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                boolean isMale = rand.nextBoolean();
                 if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location, isMale);
-                    animals.add(fox);
+                    creatures.add(fox);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
-                    Animal rabbit = new Rabbit(true, field, location, isMale);
-                    animals.add(rabbit);
+                    Creature rabbit = new Rabbit(true, field, location, isMale);
+                    creatures.add(rabbit);
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
-                    Animal deer = new Deer(true, field, location, isMale);
-                    animals.add(deer);
+                    Creature deer = new Deer(true, field, location, isMale);
+                    creatures.add(deer);
                 } else if (rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
-                    Animal tiger = new Tiger(true, field, location, isMale);
-                    animals.add(tiger);
+                    Creature tiger = new Tiger(true, field, location, isMale);
+                    creatures.add(tiger);
                 } else if (rand.nextDouble() <= RAT_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
-                    Animal rat = new Rat(true, field, location, isMale);
-                    animals.add(rat);
+                    Creature rat = new Rat(true, field, location, isMale);
+                    creatures.add(rat);
+                } else if(rand.nextDouble() <= PLANT_CREATION_PROBABILITY) {
+                    boolean isMale = rand.nextBoolean();
+                    Location location = new Location(row, col);
+                    Creature plant = new Plant(true, field, location, isMale);
+                    creatures.add(plant);
                 }
                 // else leave the location empty.
             }
