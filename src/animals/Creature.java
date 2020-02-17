@@ -41,6 +41,8 @@ public abstract class Creature {
 
     // Indicates what time of the day is now
     private boolean isNight;
+    // Indicates if raining
+    private boolean isRaining;
 
     /**
      * Create a new animal at location in field.
@@ -162,6 +164,11 @@ public abstract class Creature {
         this.isNight = isNight;
     }
 
+    public void setRain(boolean isRaining) {this.isRaining = isRaining;}
+
+    protected boolean isRaining() {
+        return this.isRaining;
+    }
     protected boolean isNight() {
         return this.isNight;
     }
