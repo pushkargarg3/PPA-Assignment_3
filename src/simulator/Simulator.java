@@ -77,11 +77,11 @@ public class Simulator {
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.ORANGE);
+        view.setColor(Rabbit.class, Color.MAGENTA);
         view.setColor(Deer.class, Color.YELLOW);
-        view.setColor(Rat.class, Color.RED);
-        view.setColor(Fox.class, Color.BLUE);
-        view.setColor(Tiger.class, Color.CYAN);
+        view.setColor(Rat.class, Color.DARK_GRAY);
+        view.setColor(Fox.class, Color.RED);
+        view.setColor(Tiger.class, Color.ORANGE);
         view.setColor(Plant.class, Color.GREEN);
 
         isNight = false;
