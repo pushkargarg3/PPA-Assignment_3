@@ -4,5 +4,5 @@ import field.Field;
 import field.Location;
 
 public interface AnimalCreator {
-    Animal create(Field field, Location location);
+    Creature create(Field field, Location location);
 }

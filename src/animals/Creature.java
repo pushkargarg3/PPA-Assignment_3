@@ -13,7 +13,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public abstract class Animal {
+public abstract class Creature {
     // Whether the animal is alive or not.
     private boolean alive;
     // The animal's field.
@@ -48,7 +48,7 @@ public abstract class Animal {
      * @param field    The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(
+    public Creature(
             boolean isRandomAge,
             Field field,
             Location location,
@@ -67,6 +67,8 @@ public abstract class Animal {
         this.maxAge = maxAge;
         this.breedingAge = breedingAge;
 
+        this.isMale = isMale;
+
         this.setAge(isRandomAge);
     }
 
@@ -82,9 +84,9 @@ public abstract class Animal {
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      *
-     * @param newAnimals A list to receive newly born animals.
+     * @param newCreatures A list to receive newly born animals.
      */
-    abstract public void act(List<Animal> newAnimals);
+    abstract public void act(List<Creature> newCreatures);
 
     /**
      * Check whether the animal is alive or not.
@@ -143,7 +145,7 @@ public abstract class Animal {
         return isMale;
     }
 
-    protected void giveBirth(List<Animal> newAnimals, AnimalCreator creator) {
+    protected void giveBirth(List<Creature> newCreatures, AnimalCreator creator) {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
@@ -151,8 +153,8 @@ public abstract class Animal {
         int births = breed();
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Animal young = creator.create(field, loc);
-            newAnimals.add(young);
+            Creature young = creator.create(field, loc);
+            newCreatures.add(young);
         }
     }
 

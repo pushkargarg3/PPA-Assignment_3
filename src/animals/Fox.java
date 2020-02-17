@@ -1,9 +1,10 @@
 package animals;
 
+import animals.prey.Rabbit;
+import animals.prey.Rat;
 import field.Field;
 import field.Location;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -14,7 +15,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Fox extends Predator {
+public class Fox extends Eater {
     // Characteristics shared by all foxes (class variables).
 
     // The age at which a fox can start to breed.
@@ -22,9 +23,9 @@ public class Fox extends Predator {
     // The age to which a fox can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.16;
+    private static final double BREEDING_PROBABILITY = 0.18;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 3;
 
     private Random random;
 
@@ -42,7 +43,7 @@ public class Fox extends Predator {
     }
 
     @Override
-    protected boolean canEatAnimal(Object animal) {
+    protected boolean canEatCreature(Object animal) {
         return animal instanceof Rabbit || animal instanceof Rat;
     }
 
@@ -53,7 +54,7 @@ public class Fox extends Predator {
      * @param newFoxes A list to return newly born foxes.
      */
     @Override
-    protected void giveBirth(List<Animal> newFoxes, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Creature> newFoxes, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale())

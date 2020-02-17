@@ -1,19 +1,20 @@
 package animals;
 
+import animals.prey.Deer;
 import field.Field;
 import field.Location;
 
 import java.util.List;
 import java.util.Random;
 
-public class Tiger extends Predator {
+public class Tiger extends Eater {
 
     // The age at which a fox can start to breed.
     private static final int BREEDING_AGE = 15;
     // The age to which a fox can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.16;
+    private static final double BREEDING_PROBABILITY = 0.2;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
@@ -33,12 +34,12 @@ public class Tiger extends Predator {
     }
 
     @Override
-    protected boolean canEatAnimal(Object animal) {
+    protected boolean canEatCreature(Object animal) {
         return animal instanceof Deer;
     }
 
     @Override
-    protected void giveBirth(List<Animal> newTigers, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Creature> newTigers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale())

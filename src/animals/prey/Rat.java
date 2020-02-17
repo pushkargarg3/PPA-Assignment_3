@@ -1,12 +1,14 @@
-package animals;
+package animals.prey;
 
+import animals.Creature;
+import animals.AnimalCreator;
 import field.Field;
 import field.Location;
 
 import java.util.List;
 import java.util.Random;
 
-public class Rat extends Animal {
+public class Rat extends Creature {
     // Characteristics shared by all rats (class variables).
 
     // The age at which a rat can start to breed.
@@ -14,13 +16,17 @@ public class Rat extends Animal {
     // The age to which a rat can live.
     private static final int MAX_AGE = 8;
     // The likelihood of a rat breeding.
-    private static final double BREEDING_PROBABILITY = 0.20;
+    private static final double BREEDING_PROBABILITY = 0.11;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 5;
+    // The probability of rat being infected
+    private static final double INFECTED_PROBABILITY = 0.06;
 
     private final int RAT_FOOD_VALUE = 2;
 
     private Random random;
+
+    private boolean isInfected;
 
     /**
      * Create a new animal at location in field.
@@ -32,6 +38,7 @@ public class Rat extends Animal {
     public Rat(boolean randomAge, Field field, Location location, boolean isMale) {
         super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
         random = new Random();
+        isInfected = random.nextDouble() <= INFECTED_PROBABILITY;
     }
 
 
@@ -40,11 +47,18 @@ public class Rat extends Animal {
      * around. Sometimes it will breed or die of old age.
      * @param newRats A list to return newly born rats.
      */
-    public void act(List<Animal> newRats)
+    public void act(List<Creature> newRats)
     {
+        // If the animal is infected it dies faster
+        if (isInfected) {
+            incrementAge();
+        }
         incrementAge();
+
         if(isAlive()) {
             giveBirth(newRats);
+            if(isInfected)
+                infect();
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
@@ -53,6 +67,18 @@ public class Rat extends Animal {
             else {
                 // Overcrowding.
                 setDead();
+            }
+        }
+    }
+
+    private void infect() {
+        Field currentField = getField();
+        List<Location> adjacent = currentField.adjacentLocations(getLocation());
+
+        for (Location where : adjacent) {
+            Object animal = getField().getObjectAt(where);
+            if (animal instanceof Rat && random.nextDouble() <= INFECTED_PROBABILITY) {
+                ((Rat) animal).isInfected = true;
             }
         }
     }
@@ -71,7 +97,7 @@ public class Rat extends Animal {
      * New births will be made into free adjacent locations.
      * @param newRats A list to return newly born rats.
      */
-    private void giveBirth(List<Animal> newRats) {
+    private void giveBirth(List<Creature> newRats) {
         Field currentField = getField();
         List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
