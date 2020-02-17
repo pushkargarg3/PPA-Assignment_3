@@ -51,6 +51,7 @@ public class Simulator {
 
     // Boolean value which indicates the current state of the time
     private boolean isNight;
+    private boolean isRaining;
     /**
      * Construct a simulation field with default size.
      */
@@ -79,7 +80,7 @@ public class Simulator {
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.MAGENTA);
         view.setColor(Deer.class, Color.YELLOW);
-        view.setColor(Rat.class, Color.DARK_GRAY);
+        view.setColor(Rat.class, Color.GRAY);
         view.setColor(Fox.class, Color.RED);
         view.setColor(Tiger.class, Color.ORANGE);
         view.setColor(Plant.class, Color.GREEN);
@@ -127,12 +128,23 @@ public class Simulator {
             isNight = !isNight;
             view.setNight(isNight);
         }
-
+        // Every 60th step start raining for another 60 steps.
+        if (step % 60 == 0){
+            isRaining = !isRaining;
+        }
+        // Display is raining message.
+        if (isRaining) {
+            view.setInfoText("RAINING!");
+        }
+        // Set to null when weather is normal.
+        else
+            view.setInfoText("");
         // Let all creatures act.
         for (Iterator<Creature> it = creatures.iterator(); it.hasNext(); ) {
             Creature creature = it.next();
 
             creature.setDayTime(isNight);
+            creature.setRain(isRaining);
             creature.act(newCreatures);
             if (!creature.isAlive()) {
                 it.remove();

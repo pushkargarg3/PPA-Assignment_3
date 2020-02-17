@@ -43,7 +43,9 @@ public class Plant extends Creature {
      * @param newPlants A list to return newly born deers.
      */
     public void act(List<Creature> newPlants) {
-        incrementAge();
+        // Plants grow when it rains
+        if (isRaining())
+            incrementAge();
         if (isAlive()) {
             giveBirth(newPlants);
         }
