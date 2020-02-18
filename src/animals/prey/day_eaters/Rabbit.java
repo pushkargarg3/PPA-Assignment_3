@@ -1,7 +1,7 @@
-package animals.prey;
+package animals.prey.day_eaters;
 
 import animals.Creature;
-import animals.Eater;
+import animals.prey.Plant;
 import field.Field;
 import field.Location;
 
@@ -16,7 +16,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Rabbit extends Eater {
+public class Rabbit extends DayEater {
     // Characteristics shared by all rabbits (class variables).
 
     // The age at which a rabbit can start to breed.
@@ -48,35 +48,6 @@ public class Rabbit extends Eater {
     }
 
     // TODO: Fix the comments
-    /**
-     * This is what the rabbits does most of the time - it runs
-     * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born deers.
-     */
-    @Override
-    public void act(List<Creature> newRabbits)
-    {
-        incrementAge();
-        incrementHunger();
-        if(isAlive()) {
-            Field currentField = getField();
-            List<Location> adjacent = currentField.adjacentLocations(getLocation());
-            giveBirth(newRabbits, adjacent);
-            findFood();
-            // Try to move into a free location.
-            if(this.isNight()) {
-                return;
-            }
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
-                setLocation(newLocation);
-            }
-            else {
-                // Overcrowding.
-                setDead();
-            }
-        }
-    }
 
     @Override
     protected boolean canEatCreature(Object creature) {
@@ -96,8 +67,10 @@ public class Rabbit extends Eater {
     protected void giveBirth(List<Creature> newRabbits, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
-            if (animal instanceof Rabbit && ((Rabbit) animal).isMale() != this.isMale())
+            if (animal instanceof Rabbit && ((Rabbit) animal).isMale() != this.isMale()) {
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newRabbits, (field, location) -> new Rabbit(false, field, location, random.nextBoolean()));
+            }
         }
     }
 }

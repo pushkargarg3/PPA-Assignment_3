@@ -105,7 +105,7 @@ public class Rat extends Creature {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Rat && ((Rat) animal).isMale() != this.isMale()) {
                 AnimalCreator creator = (field, location) -> new Rat(false, field, location, random.nextBoolean());
-
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newRats, creator);
             }
         }
