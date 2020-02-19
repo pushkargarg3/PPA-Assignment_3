@@ -66,8 +66,6 @@ public class Rabbit extends DayEater {
         return RABBIT_FOOD_VALUE;
     }
 
-    @Override
-    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     @Override
     protected void giveBirth(List<Creature> newRabbits, List<Location> adjacentLocations) {

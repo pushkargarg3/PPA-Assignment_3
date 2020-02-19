@@ -74,6 +74,4 @@ public class Fox extends Eater {
         return 0;
     }
 
-    @Override
-    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 }

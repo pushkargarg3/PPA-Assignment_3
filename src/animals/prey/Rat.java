@@ -98,8 +98,6 @@ public class Rat extends Creature {
         return RAT_FOOD_VALUE;
     }
 
-    @Override
-    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     /**
      * Check whether or not this rat is to give birth at this step.
