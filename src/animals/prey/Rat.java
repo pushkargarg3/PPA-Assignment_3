@@ -14,17 +14,18 @@ public class Rat extends Creature {
     // The age at which a rat can start to breed.
     private static final int BREEDING_AGE = 2;
     // The age to which a rat can live.
-    private static final int MAX_AGE = 8;
+    private static final int MAX_AGE = 5;
     // The likelihood of a rat breeding.
     private static final double BREEDING_PROBABILITY = 0.11;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 5;
+    private static final int MAX_LITTER_SIZE = 4;
     // The probability of rat being infected
     private static final double INFECTED_PROBABILITY = 0.05;
 
     private final int RAT_FOOD_VALUE = 2;
 
     private Random random;
+
 
 
     /**
@@ -60,15 +61,17 @@ public class Rat extends Creature {
         if(isAlive()) {
             giveBirth(newRats);
             if(isInfected)
-                infect();
-            // Try to move into a free location.
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
-                setLocation(newLocation);
-            }
-            else {
-                // Overcrowding.
-                setDead();
+                infector.infect(getField().adjacentLocations(getLocation()), getField());
+            //rats hide if raining and don't move
+            if(!isHiding()) {
+                // Try to move into a free location.
+                Location newLocation = getField().freeAdjacentLocation(getLocation());
+                if (newLocation != null) {
+                    setLocation(newLocation);
+                } else {
+                    // Overcrowding.
+                    setDead();
+                }
             }
 
         }

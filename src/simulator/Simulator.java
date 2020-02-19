@@ -31,15 +31,15 @@ public class Simulator {
     // The probability that a fox will be created in any given grid position.
     private static final double FOX_CREATION_PROBABILITY = 0.05;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.16;
+    private static final double RABBIT_CREATION_PROBABILITY = 0.06;
     // The probability that a deer will be created in any given grid position.
-    private static final double DEER_CREATION_PROBABILITY = 0.15;
+    private static final double DEER_CREATION_PROBABILITY = 0.06;
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.04;
     // The probability that a tiger will be created in any given grid position.
-    private static final double RAT_CREATION_PROBABILITY = 0.10;
+    private static final double RAT_CREATION_PROBABILITY = 0.15;
     // The probability that a plant will be created in any given grid position.
-    private static final double PLANT_CREATION_PROBABILITY = 0.20;
+    private static final double PLANT_CREATION_PROBABILITY = 0.1;
     // List of animals in the field.
     private List<Creature> creatures;
     // The current state of the field.
@@ -48,10 +48,12 @@ public class Simulator {
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-
+    // Random object
+    private Random rand = Randomizer.getRandom();
     // Boolean value which indicates the current state of the time
     private boolean isNight;
     private boolean isRaining;
+    private int rainTime;
     /**
      * Construct a simulation field with default size.
      */
@@ -86,7 +88,7 @@ public class Simulator {
         view.setColor(Plant.class, Color.GREEN);
 
         isNight = false;
-
+        rainTime = 15;
         // Setup a valid starting point.
         reset();
     }
@@ -108,7 +110,7 @@ public class Simulator {
     public void simulate(int numSteps) {
         for (int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-//            delay(1000);   // uncomment this to run more slowly
+//            delay(500);   // uncomment this to run more slowly
         }
     }
 
@@ -128,10 +130,18 @@ public class Simulator {
             isNight = !isNight;
             view.setNight(isNight);
         }
-        // Every 60th step start raining for another 60 steps.
-        if (step % 60 == 0){
+        // Rains for given raintime
+        if (step % rainTime == 0){
             isRaining = !isRaining;
+            if (!isRaining) {
+                do {
+                    // rain time is random
+                    rainTime = rand.nextInt(15);
+                }
+                while (rainTime == 0);// prevents zero division error
+            }
         }
+
         // Display is raining message.
         if (isRaining) {
             view.setInfoText("RAINING!");
@@ -173,37 +183,31 @@ public class Simulator {
      * Randomly populate the field with foxes and rabbits.
      */
     private void populate() {
-        Random rand = Randomizer.getRandom();
         field.clear();
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
+                boolean isMale = rand.nextBoolean();
                 if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location, isMale);
                     creatures.add(fox);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Creature rabbit = new Rabbit(true, field, location, isMale);
                     creatures.add(rabbit);
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Creature deer = new Deer(true, field, location, isMale);
                     creatures.add(deer);
                 } else if (rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Creature tiger = new Tiger(true, field, location, isMale);
                     creatures.add(tiger);
                 } else if (rand.nextDouble() <= RAT_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Creature rat = new Rat(true, field, location, isMale);
                     creatures.add(rat);
                 } else if(rand.nextDouble() <= PLANT_CREATION_PROBABILITY) {
-                    boolean isMale = rand.nextBoolean();
                     Location location = new Location(row, col);
                     Creature plant = new Plant(true, field, location, isMale);
                     creatures.add(plant);
