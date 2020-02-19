@@ -9,14 +9,16 @@ import java.util.List;
 import java.util.Random;
 
 public class Plant extends Creature {
-    // Characteristics shared by all deers (class variables).
+    // Characteristics shared by all plants (class variables).
 
-    // The age at which a deer can start to breed.
-    private static final int BREEDING_AGE = 5;
-    // The age to which a deer can live.
-    private static final int MAX_AGE = 15;
-    // The likelihood of a deer breeding.
-    private static final double BREEDING_PROBABILITY = 0.10;
+    // The age at which a plant can start to breed.
+    private static final int BREEDING_AGE = 4;
+    // The age to which a plant can live.
+    private static final int MAX_AGE = 8;
+    // The likelihood of a plant breeding.
+    private static final double BREEDING_PROBABILITY = 0.06;
+    // The probability of plant being infected
+    private static final double INFECTED_PROBABILITY = 0.02;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
@@ -38,10 +40,10 @@ public class Plant extends Creature {
     }
 
     /**
-     * This is what the deer does most of the time - it runs
+     * This is what the plant does most of the time - it runs
      * around. Sometimes it will breed or die of old age.
      *
-     * @param newPlants A list to return newly born deers.
+     * @param newPlants A list to return newly born plants.
      */
     public void act(List<Creature> newPlants) {
         // Plants grow when it rains
@@ -64,10 +66,10 @@ public class Plant extends Creature {
     public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     /**
-     * Check whether or not this deer is to give birth at this step.
+     * Check whether or not this plant is to give birth at this step.
      * New births will be made into free adjacent locations.
      *
-     * @param newPlants A list to return newly born deers.
+     * @param newPlants A list to return newly born plants.
      */
     private void giveBirth(List<Creature> newPlants) {
         Field currentField = getField();
