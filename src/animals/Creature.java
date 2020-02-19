@@ -43,6 +43,8 @@ public abstract class Creature {
     private boolean isNight;
     // Indicates if raining
     private boolean isRaining;
+    // Indicates if hiding
+    private boolean isHiding = false;
 
     /**
      * Create a new animal at location in field.
@@ -92,7 +94,13 @@ public abstract class Creature {
         this.isNight = isNight;
     }
 
-    public void setRain(boolean isRaining) {this.isRaining = isRaining;}
+    public void setRain(boolean isRaining) {
+        this.isRaining = isRaining;
+    }
+
+    public void setHiding(boolean isHiding){
+        this.isHiding = isHiding;
+    }
 
     /**
      * Make this animal act - that is: make it do
@@ -165,6 +173,10 @@ public abstract class Creature {
 
     protected boolean isNight() {
         return this.isNight;
+    }
+
+    protected boolean isHiding() {
+        return this.isHiding;
     }
 
     protected void incrementAge() {
