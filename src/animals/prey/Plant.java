@@ -73,7 +73,7 @@ public class Plant extends Creature {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Plant) {
                 AnimalCreator creator = (field, location) -> new Plant(false, field, location, random.nextBoolean());
-
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newPlants, creator);
             }
         }

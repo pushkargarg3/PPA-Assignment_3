@@ -25,7 +25,7 @@ public class SimulatorView extends JFrame
     private static final Color EMPTY_COLOR = Color.white;
 
     // Color used during the night time
-    private static final Color NIGHT_COLOR = Color.black;
+    private static final Color NIGHT_COLOR = Color.lightGray;
 
     // Color used for objects that have no defined color.
     private static final Color UNKNOWN_COLOR = Color.gray;

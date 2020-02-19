@@ -1,6 +1,6 @@
 package animals;
 
-import animals.prey.Deer;
+import animals.prey.day_eaters.Deer;
 import field.Field;
 import field.Location;
 
@@ -42,8 +42,10 @@ public class Tiger extends Eater {
     protected void giveBirth(List<Creature> newTigers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
-            if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale())
+            if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale()) {
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newTigers, (field, location) -> new Tiger(false, field, location, random.nextBoolean()));
+            }
         }
     }
 

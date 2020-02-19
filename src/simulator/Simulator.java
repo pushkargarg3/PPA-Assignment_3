@@ -1,9 +1,9 @@
 package simulator;
 
 import animals.*;
-import animals.prey.Deer;
+import animals.prey.day_eaters.Deer;
 import animals.prey.Plant;
-import animals.prey.Rabbit;
+import animals.prey.day_eaters.Rabbit;
 import animals.prey.Rat;
 import field.Field;
 import field.Location;

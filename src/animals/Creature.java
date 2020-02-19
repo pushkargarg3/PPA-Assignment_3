@@ -74,21 +74,6 @@ public abstract class Creature {
         this.setAge(isRandomAge);
     }
 
-    private void setAge(boolean isRandomAge) {
-        if (isRandomAge) {
-            age = rand.nextInt(maxAge);
-        } else {
-            age = 0;
-        }
-    }
-
-    /**
-     * Make this animal act - that is: make it do
-     * whatever it wants/needs to do.
-     *
-     * @param newCreatures A list to receive newly born animals.
-     */
-    abstract public void act(List<Creature> newCreatures);
 
     /**
      * Check whether the animal is alive or not.
@@ -98,6 +83,24 @@ public abstract class Creature {
     public boolean isAlive() {
         return alive;
     }
+
+    public boolean isMale() {
+        return isMale;
+    }
+
+    public void setDayTime(boolean isNight) {
+        this.isNight = isNight;
+    }
+
+    public void setRain(boolean isRaining) {this.isRaining = isRaining;}
+
+    /**
+     * Make this animal act - that is: make it do
+     * whatever it wants/needs to do.
+     *
+     * @param newCreatures A list to receive newly born animals.
+     */
+    public abstract void act(List<Creature> newCreatures);
 
     /**
      * Indicate that the animal is no longer alive.
@@ -143,12 +146,8 @@ public abstract class Creature {
         return field;
     }
 
-    public boolean isMale() {
-        return isMale;
-    }
-
     protected void giveBirth(List<Creature> newCreatures, AnimalCreator creator) {
-        // New foxes are born into adjacent locations.
+        // New creatures are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -160,15 +159,10 @@ public abstract class Creature {
         }
     }
 
-    public void setDayTime(boolean isNight) {
-        this.isNight = isNight;
-    }
-
-    public void setRain(boolean isRaining) {this.isRaining = isRaining;}
-
     protected boolean isRaining() {
         return this.isRaining;
     }
+
     protected boolean isNight() {
         return this.isNight;
     }
@@ -177,6 +171,16 @@ public abstract class Creature {
         age++;
         if (age > maxAge) {
             setDead();
+        }
+    }
+
+    protected abstract int getFoodLevel();
+
+    private void setAge(boolean isRandomAge) {
+        if (isRandomAge) {
+            age = rand.nextInt(maxAge);
+        } else {
+            age = 0;
         }
     }
 
@@ -191,8 +195,6 @@ public abstract class Creature {
     private boolean canBreed() {
         return age >= breedingAge;
     }
-
-    protected abstract int getFoodLevel();
 }
 
 

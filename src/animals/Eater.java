@@ -10,7 +10,8 @@ public abstract class Eater extends Creature {
     private int foodLevel;
 
     /**
-     * Create a new animal at location in field.
+     * Create a new creature at location in field.
+     * This creature is able to eat.
      *
      * @param isRandomAge         If the age should be randomly assigned
      * @param field               The field currently occupied.
@@ -88,12 +89,12 @@ public abstract class Eater extends Creature {
         return null;
     }
 
+    protected abstract boolean canEatCreature(Object animal);
+
+    protected abstract void giveBirth(List<Creature> newCreatures, List<Location> adjacentLocations);
+
     private List<Location> getLocationList() {
         Field field = getField();
         return field.adjacentLocations(getLocation());
     }
-
-    protected abstract boolean canEatCreature(Object animal);
-
-    protected abstract void giveBirth(List<Creature> newCreatures, List<Location> adjacentLocations);
 }

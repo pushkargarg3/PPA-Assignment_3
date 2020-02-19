@@ -1,6 +1,6 @@
 package animals;
 
-import animals.prey.Rabbit;
+import animals.prey.day_eaters.Rabbit;
 import animals.prey.Rat;
 import field.Field;
 import field.Location;
@@ -26,7 +26,6 @@ public class Fox extends Eater {
     private static final double BREEDING_PROBABILITY = 0.18;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
-
     private Random random;
 
     /**
@@ -57,8 +56,10 @@ public class Fox extends Eater {
     protected void giveBirth(List<Creature> newFoxes, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
-            if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale())
+            if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale()) {
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location, random.nextBoolean()));
+            }
         }
     }
 

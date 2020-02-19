@@ -1,15 +1,14 @@
-package animals.prey;
+package animals.prey.day_eaters;
 
 import animals.Creature;
-import animals.Eater;
+import animals.prey.Plant;
 import field.Field;
 import field.Location;
 
 import java.util.List;
 import java.util.Random;
 
-public class Deer extends Eater
-{
+public class Deer extends DayEater {
     // Characteristics shared by all deers (class variables).
 
     // The age at which a deer can start to breed.
@@ -32,43 +31,12 @@ public class Deer extends Eater
      * zero (a new born) or with a random age.
      *
      * @param randomAge If true, the deer will have a random age.
-     * @param field The field currently occupied.
-     * @param location The location within the field.
+     * @param field     The field currently occupied.
+     * @param location  The location within the field.
      */
-    public Deer(boolean randomAge, Field field, Location location, boolean isMale)
-    {
+    public Deer(boolean randomAge, Field field, Location location, boolean isMale) {
         super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
         random = new Random();
-    }
-
-    /**
-     * This is what the deer does most of the time - it runs
-     * around. Sometimes it will breed or die of old age.
-     * @param newDeers A list to return newly born deers.
-     */
-    @Override
-    public void act(List<Creature> newDeers)
-    {
-        incrementAge();
-        incrementHunger();
-        if(isAlive()) {
-            Field currentField = getField();
-            List<Location> adjacent = currentField.adjacentLocations(getLocation());
-            giveBirth(newDeers, adjacent);
-            findFood();
-            // Try to move into a free location.
-            if(this.isNight()) {
-                return;
-            }
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
-                setLocation(newLocation);
-            }
-            else {
-                // Overcrowding.
-                setDead();
-            }
-        }
     }
 
     @Override
@@ -77,7 +45,6 @@ public class Deer extends Eater
     }
 
     /**
-     *
      * @return returns the default food level of the deer
      */
     @Override
@@ -89,8 +56,10 @@ public class Deer extends Eater
     protected void giveBirth(List<Creature> newDeers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
-            if (animal instanceof Deer && ((Deer) animal).isMale() != this.isMale())
+            if (animal instanceof Deer && ((Deer) animal).isMale() != this.isMale()) {
+                // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newDeers, (field, location) -> new Deer(false, field, location, random.nextBoolean()));
+            }
         }
     }
 }
