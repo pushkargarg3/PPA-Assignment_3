@@ -21,9 +21,11 @@ public abstract class DayEater extends Eater {
      * @param maxLitterSize       The maximum number of children
      * @param maxAge              The maximum age of the predator
      * @param breedingAge         The minimum age of breeding
+     * @param infectedProbability The probability of infection
      */
-    public DayEater(boolean isRandomAge, Field field, Location location, boolean isMale, double breedingProbability, int maxLitterSize, int maxAge, int breedingAge) {
-        super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge);
+    public DayEater(boolean isRandomAge, Field field, Location location, boolean isMale, double breedingProbability, int maxLitterSize, int maxAge, int breedingAge,
+                    double infectedProbability) {
+        super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge, infectedProbability);
     }
 
     /**
@@ -35,12 +37,18 @@ public abstract class DayEater extends Eater {
     @Override
     public void act(List<Creature> newCreatures)
     {
+        // If the animal is infected it dies faster
+        if (isInfected) {
+            incrementAge();
+        }
         incrementAge();
         incrementHunger();
         if(isAlive()) {
             Field currentField = getField();
             List<Location> adjacent = currentField.adjacentLocations(getLocation());
             giveBirth(newCreatures, adjacent);
+            if(isInfected)
+                infector.infect(getField().adjacentLocations(getLocation()), getField());
             findFood();
             // Try to move into a free location.
             if(this.isNight()) {

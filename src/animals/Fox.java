@@ -21,9 +21,11 @@ public class Fox extends Eater {
     // The age at which a fox can start to breed.
     private static final int BREEDING_AGE = 15;
     // The age to which a fox can live.
-    private static final int MAX_AGE = 150;
+    private static final int MAX_AGE = 50;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.18;
+    private static final double BREEDING_PROBABILITY = 0.1;
+    // The probability of fox being infected
+    private static final double INFECTED_PROBABILITY = 0.01;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
     private Random random;
@@ -37,7 +39,8 @@ public class Fox extends Eater {
      * @param location  The location within the field.
      */
     public Fox(boolean randomAge, Field field, Location location, boolean isMale) {
-        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
+                INFECTED_PROBABILITY);
         random = new Random();
     }
 
@@ -70,4 +73,7 @@ public class Fox extends Eater {
     protected int getFoodLevel() {
         return 0;
     }
+
+    @Override
+    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 }

@@ -32,7 +32,7 @@ public class Rabbit extends DayEater {
 
     // Individual characteristics (instance fields).
 
-    Random random;
+    private Random random;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -43,7 +43,8 @@ public class Rabbit extends DayEater {
      * @param location  The location within the field.
      */
     public Rabbit(boolean randomAge, Field field, Location location, boolean isMale) {
-        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
+                INFECTED_PROBABILITY);
         random = new Random();
     }
 
@@ -62,6 +63,9 @@ public class Rabbit extends DayEater {
     protected int getFoodLevel() {
         return RABBIT_FOOD_VALUE;
     }
+
+    @Override
+    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     @Override
     protected void giveBirth(List<Creature> newRabbits, List<Location> adjacentLocations) {
