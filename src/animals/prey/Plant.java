@@ -18,7 +18,7 @@ public class Plant extends Creature {
     // The likelihood of a deer breeding.
     private static final double BREEDING_PROBABILITY = 0.10;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 8;
+    private static final int MAX_LITTER_SIZE = 2;
 
     private static final int PLANT_FOOD_VALUE = 5;
 
@@ -32,7 +32,8 @@ public class Plant extends Creature {
      * @param location    The location within the field.
      */
     public Plant(boolean isRandomAge, Field field, Location location, boolean isMale) {
-        super(isRandomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(isRandomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
+                INFECTED_PROBABILITY);
         this.random = new Random();
     }
 
@@ -58,6 +59,9 @@ public class Plant extends Creature {
     protected int getFoodLevel() {
         return PLANT_FOOD_VALUE;
     }
+
+    @Override
+    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     /**
      * Check whether or not this deer is to give birth at this step.

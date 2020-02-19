@@ -20,13 +20,12 @@ public class Rat extends Creature {
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 5;
     // The probability of rat being infected
-    private static final double INFECTED_PROBABILITY = 0.06;
+    private static final double INFECTED_PROBABILITY = 0.05;
 
     private final int RAT_FOOD_VALUE = 2;
 
     private Random random;
 
-    private boolean isInfected;
 
     /**
      * Create a new animal at location in field.
@@ -36,7 +35,8 @@ public class Rat extends Creature {
      * @param location            The location within the field.
      */
     public Rat(boolean randomAge, Field field, Location location, boolean isMale) {
-        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE);
+        super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
+                    INFECTED_PROBABILITY);
         random = new Random();
         isInfected = random.nextDouble() <= INFECTED_PROBABILITY;
     }
@@ -74,17 +74,17 @@ public class Rat extends Creature {
         }
     }
 
-    private void infect() {
-        Field currentField = getField();
-        List<Location> adjacent = currentField.adjacentLocations(getLocation());
-
-        for (Location where : adjacent) {
-            Object animal = getField().getObjectAt(where);
-            if (animal instanceof Rat && random.nextDouble() <= INFECTED_PROBABILITY) {
-                ((Rat) animal).isInfected = true;
-            }
-        }
-    }
+//    private void infect() {
+//        Field currentField = getField();
+//        List<Location> adjacent = currentField.adjacentLocations(getLocation());
+//
+//        for (Location where : adjacent) {
+//            Object animal = getField().getObjectAt(where);
+//            if (animal instanceof Rat && random.nextDouble() <= INFECTED_PROBABILITY) {
+//                ((Rat) animal).isInfected = true;
+//            }
+//        }
+//    }
 
     /**
      *
@@ -94,6 +94,9 @@ public class Rat extends Creature {
     protected int getFoodLevel() {
         return RAT_FOOD_VALUE;
     }
+
+    @Override
+    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     /**
      * Check whether or not this rat is to give birth at this step.

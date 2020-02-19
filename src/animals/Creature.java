@@ -2,6 +2,7 @@ package animals;
 
 import field.Field;
 import field.Location;
+import infector.Infector;
 import utils.Randomizer;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public abstract class Creature {
     private double breedingProbability;
     // The animal's max number of births.
     private int maxLitterSize;
-
+    // The animal's infection probability
+    private double infectedProbability;
     // The age of breeding
     private int breedingAge;
 
@@ -37,6 +39,7 @@ public abstract class Creature {
     // The age of the animal
     private int age;
 
+    //The gender of the creature
     private boolean isMale;
 
     // Indicates what time of the day is now
@@ -44,7 +47,11 @@ public abstract class Creature {
     // Indicates if raining
     private boolean isRaining;
     // Indicates if hiding
-    private boolean isHiding = false;
+    private boolean isHiding;
+    // Indicates if infected
+    protected boolean isInfected;
+    // Used to infect cross species
+    protected Infector infector;
 
     /**
      * Create a new animal at location in field.
@@ -60,20 +67,24 @@ public abstract class Creature {
             double breedingProbability,
             int maxLitterSize,
             int maxAge,
-            int breedingAge) {
+            int breedingAge,
+            double infectedProbability) {
         alive = true;
         this.field = field;
         setLocation(location);
 
         // Animal specific options
         this.breedingProbability = breedingProbability;
+        this.infectedProbability = infectedProbability;
         this.maxLitterSize = maxLitterSize;
         this.maxAge = maxAge;
         this.breedingAge = breedingAge;
 
         this.isMale = isMale;
-
+        isHiding = false;
         this.setAge(isRandomAge);
+
+        infector = new Infector();
     }
 
 
@@ -101,6 +112,8 @@ public abstract class Creature {
     public void setHiding(boolean isHiding){
         this.isHiding = isHiding;
     }
+
+    public void setInfected() {this.isInfected = true;}
 
     /**
      * Make this animal act - that is: make it do
@@ -187,6 +200,8 @@ public abstract class Creature {
     }
 
     protected abstract int getFoodLevel();
+
+    public abstract double getInfectedProbability();
 
     private void setAge(boolean isRandomAge) {
         if (isRandomAge) {

@@ -21,6 +21,7 @@ public abstract class Eater extends Creature {
      * @param maxLitterSize       The maximum number of children
      * @param maxAge              The maximum age of the predator
      * @param breedingAge         The minimum age of breeding
+     * @param infectedProbability The probability of infection
      */
     public Eater(
             boolean isRandomAge,
@@ -30,18 +31,25 @@ public abstract class Eater extends Creature {
             double breedingProbability,
             int maxLitterSize,
             int maxAge,
-            int breedingAge) {
-        super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge);
+            int breedingAge,
+            double infectedProbability) {
+        super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge, infectedProbability);
         // TODO: Somehow we should get initial food level??
-        foodLevel = 15;
+        foodLevel = 40;
     }
 
     @Override
     public void act(List<Creature> newCreatures) {
+        // If the animal is infected it dies faster
+        if (isInfected) {
+            incrementAge();
+        }
         incrementAge();
         incrementHunger();
         if (isAlive()) {
             giveBirth(newCreatures, getLocationList());
+            if(isInfected)
+                infector.infect(getField().adjacentLocations(getLocation()), getField());
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if (newLocation == null) {
