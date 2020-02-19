@@ -201,7 +201,7 @@ public abstract class Creature {
 
     protected abstract int getFoodLevel();
 
-    public abstract double getInfectedProbability();
+    public double getInfectedProbability() { return infectedProbability;};
 
     private void setAge(boolean isRandomAge) {
         if (isRandomAge) {

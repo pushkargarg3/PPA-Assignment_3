@@ -62,8 +62,6 @@ public class Plant extends Creature {
         return PLANT_FOOD_VALUE;
     }
 
-    @Override
-    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     /**
      * Check whether or not this plant is to give birth at this step.
