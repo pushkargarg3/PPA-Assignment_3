@@ -35,7 +35,7 @@ public class Simulator {
     // The probability that a deer will be created in any given grid position.
     private static final double DEER_CREATION_PROBABILITY = 0.15;
     // The probability that a tiger will be created in any given grid position.
-    private static final double TIGER_CREATION_PROBABILITY = 0.04;
+    private static final double TIGER_CREATION_PROBABILITY = 0.02;
     // The probability that a tiger will be created in any given grid position.
     private static final double RAT_CREATION_PROBABILITY = 0.10;
     // The probability that a plant will be created in any given grid position.
