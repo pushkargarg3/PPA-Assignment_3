@@ -79,7 +79,7 @@ public abstract class Eater extends Creature {
             Object animalObj = getField().getObjectAt(where);
             if (canEatCreature(animalObj)) {
                 Creature creature = (Creature) animalObj;
-                if (creature.isAlive()) {
+                if (creature.isAlive() && !isHiding()) {
                     creature.setDead();
                     foodLevel = creature.getFoodLevel();
                     return where;

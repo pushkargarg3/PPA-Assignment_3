@@ -54,6 +54,8 @@ public class Rat extends Creature {
             incrementAge();
         }
         incrementAge();
+        //if raining rat hides
+        setHiding(isRaining());
 
         if(isAlive()) {
             giveBirth(newRats);
@@ -68,6 +70,7 @@ public class Rat extends Creature {
                 // Overcrowding.
                 setDead();
             }
+
         }
     }
 
