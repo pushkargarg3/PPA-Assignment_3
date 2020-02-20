@@ -14,5 +14,5 @@ public interface AnimalCreator {
      * @param location is passed from the giveBirth method in Creature
      * @return a new creature, can be Fox, Deer, whatever
      */
-    Creature create(Field field, Location location);
+    Organism create(Field field, Location location);
 }

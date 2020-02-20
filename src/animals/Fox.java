@@ -56,7 +56,7 @@ public class Fox extends Eater {
      * @param newFoxes A list to return newly born foxes.
      */
     @Override
-    protected void giveBirth(List<Creature> newFoxes, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newFoxes, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale()) {

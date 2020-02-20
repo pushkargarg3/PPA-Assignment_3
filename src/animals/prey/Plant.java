@@ -1,6 +1,6 @@
 package animals.prey;
 
-import animals.Creature;
+import animals.Organism;
 import animals.AnimalCreator;
 import field.Field;
 import field.Location;
@@ -8,7 +8,7 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
-public class Plant extends Creature {
+public class Plant extends Organism {
     // Characteristics shared by all plants (class variables).
 
     // The age at which a plant can start to breed.
@@ -45,7 +45,7 @@ public class Plant extends Creature {
      *
      * @param newPlants A list to return newly born plants.
      */
-    public void act(List<Creature> newPlants) {
+    public void act(List<Organism> newPlants) {
         // Plants grow when it rains
         if (isRaining())
             incrementAge();
@@ -69,7 +69,7 @@ public class Plant extends Creature {
      *
      * @param newPlants A list to return newly born plants.
      */
-    private void giveBirth(List<Creature> newPlants) {
+    private void giveBirth(List<Organism> newPlants) {
         Field currentField = getField();
         List<Location> adjacent = currentField.adjacentLocations(getLocation());
 

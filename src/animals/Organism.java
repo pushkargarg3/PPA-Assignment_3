@@ -14,7 +14,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public abstract class Creature {
+public abstract class Organism {
     // Whether the animal is alive or not.
     private boolean alive;
     // The animal's field.
@@ -59,7 +59,7 @@ public abstract class Creature {
      * @param field    The field currently occupied.
      * @param location The location within the field.
      */
-    public Creature(
+    public Organism(
             boolean isRandomAge,
             Field field,
             Location location,
@@ -119,9 +119,9 @@ public abstract class Creature {
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      *
-     * @param newCreatures A list to receive newly born animals.
+     * @param newOrganisms A list to receive newly born animals.
      */
-    public abstract void act(List<Creature> newCreatures);
+    public abstract void act(List<Organism> newOrganisms);
 
     /**
      * Indicate that the animal is no longer alive.
@@ -167,7 +167,7 @@ public abstract class Creature {
         return field;
     }
 
-    protected void giveBirth(List<Creature> newCreatures, AnimalCreator creator) {
+    protected void giveBirth(List<Organism> newOrganisms, AnimalCreator creator) {
         // New creatures are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
@@ -175,8 +175,8 @@ public abstract class Creature {
         int births = breed();
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Creature young = creator.create(field, loc);
-            newCreatures.add(young);
+            Organism young = creator.create(field, loc);
+            newOrganisms.add(young);
         }
     }
 
@@ -201,7 +201,7 @@ public abstract class Creature {
 
     protected abstract int getFoodLevel();
 
-    public double getInfectedProbability() { return infectedProbability;};
+    public double getInfectedProbability() { return infectedProbability;}
 
     private void setAge(boolean isRandomAge) {
         if (isRandomAge) {

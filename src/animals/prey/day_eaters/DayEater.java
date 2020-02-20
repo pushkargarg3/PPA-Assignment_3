@@ -1,6 +1,6 @@
 package animals.prey.day_eaters;
 
-import animals.Creature;
+import animals.Organism;
 import animals.Eater;
 import field.Field;
 import field.Location;
@@ -32,10 +32,10 @@ public abstract class DayEater extends Eater {
      * This is what the abstract day eater does most of the time - it runs
      * around. Sometimes it will breed or die of old age.
      * And most importantly it stays on one place when its night
-     * @param newCreatures A list to return newly born creatures.
+     * @param newOrganisms A list to return newly born creatures.
      */
     @Override
-    public void act(List<Creature> newCreatures)
+    public void act(List<Organism> newOrganisms)
     {
         // If the animal is infected it dies faster
         if (isInfected) {
@@ -46,9 +46,9 @@ public abstract class DayEater extends Eater {
         if(isAlive()) {
             Field currentField = getField();
             List<Location> adjacent = currentField.adjacentLocations(getLocation());
-            giveBirth(newCreatures, adjacent);
+            giveBirth(newOrganisms, adjacent);
             if(isInfected)
-                infector.infect(getField().adjacentLocations(getLocation()), getField());
+                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
             findFood();
             // Try to move into a free location.
             if(this.isNight()) {

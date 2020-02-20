@@ -42,7 +42,7 @@ public class Tiger extends Eater {
     }
 
     @Override
-    protected void giveBirth(List<Creature> newTigers, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newTigers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale()) {
