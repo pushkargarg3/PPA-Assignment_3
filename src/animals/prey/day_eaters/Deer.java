@@ -1,6 +1,6 @@
 package animals.prey.day_eaters;
 
-import animals.Creature;
+import animals.Organism;
 import animals.prey.Plant;
 import field.Field;
 import field.Location;
@@ -59,7 +59,7 @@ public class Deer extends DayEater {
     public double getInfectedProbability() {return INFECTED_PROBABILITY;}
 
     @Override
-    protected void giveBirth(List<Creature> newDeers, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newDeers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Deer && ((Deer) animal).isMale() != this.isMale()) {

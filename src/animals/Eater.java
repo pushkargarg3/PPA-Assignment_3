@@ -5,7 +5,7 @@ import field.Location;
 
 import java.util.List;
 
-public abstract class Eater extends Creature {
+public abstract class Eater extends Organism {
 
     private int foodLevel;
 
@@ -39,7 +39,7 @@ public abstract class Eater extends Creature {
     }
 
     @Override
-    public void act(List<Creature> newCreatures) {
+    public void act(List<Organism> newOrganisms) {
         // If the animal is infected it dies faster
         if (isInfected) {
             incrementAge();
@@ -47,9 +47,9 @@ public abstract class Eater extends Creature {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
-            giveBirth(newCreatures, getLocationList());
+            giveBirth(newOrganisms, getLocationList());
             if(isInfected)
-                infector.infect(getField().adjacentLocations(getLocation()), getField());
+                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if (newLocation == null) {
@@ -86,10 +86,10 @@ public abstract class Eater extends Creature {
         for (Location where : getLocationList()) {
             Object animalObj = getField().getObjectAt(where);
             if (canEatCreature(animalObj)) {
-                Creature creature = (Creature) animalObj;
-                if (creature.isAlive() && !isHiding()) {
-                    creature.setDead();
-                    foodLevel = creature.getFoodLevel();
+                Organism organism = (Organism) animalObj;
+                if (organism.isAlive() && !isHiding()) {
+                    organism.setDead();
+                    foodLevel = organism.getFoodLevel();
                     return where;
                 }
             }
@@ -99,7 +99,7 @@ public abstract class Eater extends Creature {
 
     protected abstract boolean canEatCreature(Object animal);
 
-    protected abstract void giveBirth(List<Creature> newCreatures, List<Location> adjacentLocations);
+    protected abstract void giveBirth(List<Organism> newOrganisms, List<Location> adjacentLocations);
 
     private List<Location> getLocationList() {
         Field field = getField();

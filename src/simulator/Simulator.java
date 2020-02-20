@@ -41,7 +41,7 @@ public class Simulator {
     // The probability that a plant will be created in any given grid position.
     private static final double PLANT_CREATION_PROBABILITY = 0.1;
     // List of animals in the field.
-    private List<Creature> creatures;
+    private List<Organism> organisms;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -75,7 +75,7 @@ public class Simulator {
             width = DEFAULT_WIDTH;
         }
 
-        creatures = new ArrayList<>();
+        organisms = new ArrayList<>();
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
@@ -123,7 +123,7 @@ public class Simulator {
         step++;
 
         // Provide space for newborn animals.
-        List<Creature> newCreatures = new ArrayList<>();
+        List<Organism> newOrganisms = new ArrayList<>();
 
         // On every 20th run change the day time
         if (step % 20 == 0) {
@@ -150,19 +150,19 @@ public class Simulator {
         else
             view.setInfoText("");
         // Let all creatures act.
-        for (Iterator<Creature> it = creatures.iterator(); it.hasNext(); ) {
-            Creature creature = it.next();
+        for (Iterator<Organism> it = organisms.iterator(); it.hasNext(); ) {
+            Organism organism = it.next();
 
-            creature.setDayTime(isNight);
-            creature.setRain(isRaining);
-            creature.act(newCreatures);
-            if (!creature.isAlive()) {
+            organism.setDayTime(isNight);
+            organism.setRain(isRaining);
+            organism.act(newOrganisms);
+            if (!organism.isAlive()) {
                 it.remove();
             }
         }
 
         // Add the newly born foxes and rabbits to the main lists.
-        creatures.addAll(newCreatures);
+        organisms.addAll(newOrganisms);
 
         view.showStatus(step, field);
     }
@@ -172,7 +172,7 @@ public class Simulator {
      */
     public void reset() {
         step = 0;
-        creatures.clear();
+        organisms.clear();
         populate();
 
         // Show the starting state in the view.
@@ -190,27 +190,27 @@ public class Simulator {
                 if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location, isMale);
-                    creatures.add(fox);
+                    organisms.add(fox);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Creature rabbit = new Rabbit(true, field, location, isMale);
-                    creatures.add(rabbit);
+                    Organism rabbit = new Rabbit(true, field, location, isMale);
+                    organisms.add(rabbit);
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Creature deer = new Deer(true, field, location, isMale);
-                    creatures.add(deer);
+                    Organism deer = new Deer(true, field, location, isMale);
+                    organisms.add(deer);
                 } else if (rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Creature tiger = new Tiger(true, field, location, isMale);
-                    creatures.add(tiger);
+                    Organism tiger = new Tiger(true, field, location, isMale);
+                    organisms.add(tiger);
                 } else if (rand.nextDouble() <= RAT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Creature rat = new Rat(true, field, location, isMale);
-                    creatures.add(rat);
+                    Organism rat = new Rat(true, field, location, isMale);
+                    organisms.add(rat);
                 } else if(rand.nextDouble() <= PLANT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Creature plant = new Plant(true, field, location, isMale);
-                    creatures.add(plant);
+                    Organism plant = new Plant(true, field, location, isMale);
+                    organisms.add(plant);
                 }
                 // else leave the location empty.
             }

@@ -1,6 +1,6 @@
 package animals.prey.day_eaters;
 
-import animals.Creature;
+import animals.Organism;
 import animals.prey.Plant;
 import field.Field;
 import field.Location;
@@ -22,7 +22,7 @@ public class Rabbit extends DayEater {
     // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 7;
     // The age to which a rabbit can live.
-    private static final int MAX_AGE = 15;
+    private static final int MAX_AGE = 20;
     // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.1;
     // The probability of rabbit being infected
@@ -68,7 +68,7 @@ public class Rabbit extends DayEater {
 
 
     @Override
-    protected void giveBirth(List<Creature> newRabbits, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newRabbits, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Rabbit && ((Rabbit) animal).isMale() != this.isMale()) {

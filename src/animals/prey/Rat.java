@@ -1,6 +1,6 @@
 package animals.prey;
 
-import animals.Creature;
+import animals.Organism;
 import animals.AnimalCreator;
 import field.Field;
 import field.Location;
@@ -8,7 +8,7 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
-public class Rat extends Creature {
+public class Rat extends Organism {
     // Characteristics shared by all rats (class variables).
 
     // The age at which a rat can start to breed.
@@ -48,7 +48,7 @@ public class Rat extends Creature {
      * around. Sometimes it will breed or die of old age.
      * @param newRats A list to return newly born rats.
      */
-    public void act(List<Creature> newRats)
+    public void act(List<Organism> newRats)
     {
         // If the animal is infected it dies faster
         if (isInfected) {
@@ -61,7 +61,7 @@ public class Rat extends Creature {
         if(isAlive()) {
             giveBirth(newRats);
             if(isInfected)
-                infector.infect(getField().adjacentLocations(getLocation()), getField());
+                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
             //rats hide if raining and don't move
             if(!isHiding()) {
                 // Try to move into a free location.
@@ -104,7 +104,7 @@ public class Rat extends Creature {
      * New births will be made into free adjacent locations.
      * @param newRats A list to return newly born rats.
      */
-    private void giveBirth(List<Creature> newRats) {
+    private void giveBirth(List<Organism> newRats) {
         Field currentField = getField();
         List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
