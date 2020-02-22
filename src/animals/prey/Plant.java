@@ -1,7 +1,7 @@
 package animals.prey;
 
 import animals.Organism;
-import animals.AnimalCreator;
+import animals.OrganismCreator;
 import field.Field;
 import field.Location;
 
@@ -83,7 +83,7 @@ public class Plant extends Organism {
         for (Location where : adjacent) {
             Object organism = getField().getObjectAt(where);
             if (organism instanceof Plant) {
-                AnimalCreator creator = (field, location) -> new Plant(false, field, location, random.nextBoolean());
+                OrganismCreator creator = (field, location) -> new Plant(false, field, location, random.nextBoolean());
                 // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newPlants, creator);
             }

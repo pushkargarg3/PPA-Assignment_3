@@ -17,7 +17,7 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing Tigers, Leopards, Rats, Plants, Capybaras and Deers.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
@@ -122,7 +122,7 @@ public class Simulator {
     public void simulateOneStep() {
         step++;
 
-        // Provide space for newborn animals.
+        // Provide space for newborn organisms.
         List<Organism> newOrganisms = new ArrayList<>();
 
         // On every 20th run change the day time

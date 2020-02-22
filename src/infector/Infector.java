@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Infector {
-
     private Random random;
 
     public Infector() {

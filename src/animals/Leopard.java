@@ -10,31 +10,32 @@ import java.util.Random;
 
 /**
  * A simple model of a leopard.
- * Foxes age, move, eat rabbits, and die.
+ * Leopards age, move, eat capybaras or rats, and die.
  *
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Andrian Stoykov, Pushkar Garg, Jonathan Rivera
+ * @version 2020.02.17
  */
 public class Leopard extends Eater {
-    // Characteristics shared by all foxes (class variables).
+    // Characteristics shared by all leopardes (class variables).
 
-    // The age at which a fox can start to breed.
+    // The age at which a leopard can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a fox can live.
+    // The age to which a leopard can live.
     private static final int MAX_AGE = 50;
-    // The likelihood of a fox breeding.
+    // The likelihood of a leopard breeding.
     private static final double BREEDING_PROBABILITY = 0.1;
-    // The probability of fox being infected
+    // The probability of leopard being infected
     private static final double INFECTED_PROBABILITY = 0.01;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
+
     private Random random;
 
     /**
-     * Create a fox. A fox can be created as a new born (age zero
+     * Create a leopard. A leopard can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      *
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge If true, the leopard will have random age and hunger level.
      * @param field     The field currently occupied.
      * @param location  The location within the field.
      */
@@ -50,24 +51,24 @@ public class Leopard extends Eater {
     }
 
     /**
-     * Check whether or not this fox is to give birth at this step.
+     * Check whether or not this leopard is to give birth at this step.
      * New births will be made into free adjacent locations.
      *
-     * @param newFoxes A list to return newly born foxes.
+     * @param newleopardes A list to return newly born leopardes.
      */
     @Override
-    protected void giveBirth(List<Organism> newFoxes, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newleopardes, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Leopard && ((Leopard) animal).isMale() != this.isMale()) {
                 // super.giveBirth calls the method inside Creature which gives birth
-                super.giveBirth(newFoxes, (field, location) -> new Leopard(false, field, location, random.nextBoolean()));
+                super.giveBirth(newleopardes, (field, location) -> new Leopard(false, field, location, random.nextBoolean()));
             }
         }
     }
 
     /**
-     * @return default food level of fox.
+     * @return default food level of leopard.
      */
     @Override
     protected int getFoodLevel() {

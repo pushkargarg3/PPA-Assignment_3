@@ -9,34 +9,34 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A class representing shared characteristics of animals.
+ * A class representing shared characteristics of organism.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
 public abstract class Organism {
-    // Whether the animal is alive or not.
+    // Whether the organism is alive or not.
     private boolean alive;
-    // The animal's field.
+    // The organism's field.
     private Field field;
-    // The animal's position in the field.
+    // The organism's position in the field.
     private Location location;
-    // The animal's breeding probability.
+    // The organism's breeding probability.
     private double breedingProbability;
-    // The animal's max number of births.
+    // The organism's max number of births.
     private int maxLitterSize;
-    // The animal's infection probability
+    // The organism's infection probability
     private double infectedProbability;
     // The age of breeding
     private int breedingAge;
 
-    // The maximum possible age of an animal
+    // The maximum possible age of an organism
     private int maxAge;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
 
-    // The age of the animal
+    // The age of the organism
     private int age;
 
     //The gender of the creature
@@ -54,7 +54,7 @@ public abstract class Organism {
     private Infector infector;
 
     /**
-     * Create a new animal at location in field.
+     * Create a new organism at location in field.
      *
      * @param field    The field currently occupied.
      * @param location The location within the field.
@@ -73,7 +73,7 @@ public abstract class Organism {
         this.field = field;
         setLocation(location);
 
-        // Animal specific options
+        // organism specific options
         this.breedingProbability = breedingProbability;
         this.infectedProbability = infectedProbability;
         this.maxLitterSize = maxLitterSize;
@@ -89,9 +89,9 @@ public abstract class Organism {
 
 
     /**
-     * Check whether the animal is alive or not.
+     * Check whether the organism is alive or not.
      *
-     * @return true if the animal is still alive.
+     * @return true if the organism is still alive.
      */
     public boolean isAlive() {
         return alive;
@@ -126,15 +126,15 @@ public abstract class Organism {
     }
 
     /**
-     * Make this animal act - that is: make it do
+     * Make this organism act - that is: make it do
      * whatever it wants/needs to do.
      *
-     * @param newOrganisms A list to receive newly born animals.
+     * @param newOrganisms A list to receive newly born organisms.
      */
     public abstract void act(List<Organism> newOrganisms);
 
     /**
-     * Indicate that the animal is no longer alive.
+     * Indicate that the organism is no longer alive.
      * It is removed from the field.
      */
     protected void setDead() {
@@ -147,18 +147,18 @@ public abstract class Organism {
     }
 
     /**
-     * Return the animal's location.
+     * Return the organism's location.
      *
-     * @return The animal's location.
+     * @return The organism's location.
      */
     protected Location getLocation() {
         return location;
     }
 
     /**
-     * Place the animal at the new location in the given field.
+     * Place the organism at the new location in the given field.
      *
-     * @param newLocation The animal's new location.
+     * @param newLocation The organism's new location.
      */
     protected void setLocation(Location newLocation) {
         if (location != null) {
@@ -169,15 +169,15 @@ public abstract class Organism {
     }
 
     /**
-     * Return the animal's field.
+     * Return the organism's field.
      *
-     * @return The animal's field.
+     * @return The organism's field.
      */
     protected Field getField() {
         return field;
     }
 
-    protected void giveBirth(List<Organism> newOrganisms, AnimalCreator creator) {
+    protected void giveBirth(List<Organism> newOrganisms, OrganismCreator creator) {
         // New creatures are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();

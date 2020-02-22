@@ -1,13 +1,22 @@
 package animals.prey;
 
 import animals.Organism;
-import animals.AnimalCreator;
+import animals.OrganismCreator;
 import field.Field;
 import field.Location;
 
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A simple model of a rat.
+ * Rats age, move, breed, eat, and die.
+ * They can also get infected by a virus and die faster.
+ * When its raining they hide
+ *
+ * @author Jonathan Rivera
+ * @version 2020.02.17
+ */
 public class Rat extends Organism {
     // Characteristics shared by all rats (class variables).
 
@@ -99,7 +108,7 @@ public class Rat extends Organism {
         for (Location where : adjacent) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Rat && ((Rat) animal).isMale() != this.isMale()) {
-                AnimalCreator creator = (field, location) -> new Rat(false, field, location, random.nextBoolean());
+                OrganismCreator creator = (field, location) -> new Rat(false, field, location, random.nextBoolean());
                 // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newRats, creator);
             }

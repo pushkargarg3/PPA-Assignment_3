@@ -7,6 +7,13 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A simple model of a tiger.
+ * Tiger age, move, eat deers, and die.
+ *
+ * @author Andrian Stoykov, Pushkar Garg, Jonathan Rivera
+ * @version 2020.02.17
+ */
 public class Tiger extends Eater {
 
     // The age at which a fox can start to breed.
