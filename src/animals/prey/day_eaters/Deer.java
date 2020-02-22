@@ -75,6 +75,8 @@ public class Deer extends DayEater {
 
     @Override
     protected void giveBirth(List<Organism> newDeers, List<Location> adjacentLocations) {
+        // We get all adjacent locations and check if the animals is able to give a birth
+        // with some organism near it
         for (Location where : adjacentLocations) {
             Object organism = getField().getObjectAt(where);
             if (organism instanceof Deer && ((Deer) organism).isMale() != this.isMale()) {

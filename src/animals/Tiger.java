@@ -50,6 +50,8 @@ public class Tiger extends Eater {
 
     @Override
     protected void giveBirth(List<Organism> newTigers, List<Location> adjacentLocations) {
+        // We get all adjacent locations and check if the animals is able to give a birth
+        // with some organism near it
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Tiger && ((Tiger) animal).isMale() != this.isMale()) {

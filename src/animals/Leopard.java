@@ -16,7 +16,7 @@ import java.util.Random;
  * @version 2020.02.17
  */
 public class Leopard extends Eater {
-    // Characteristics shared by all leopardes (class variables).
+    // Characteristics shared by all leopards (class variables).
 
     // The age at which a leopard can start to breed.
     private static final int BREEDING_AGE = 15;
@@ -54,15 +54,17 @@ public class Leopard extends Eater {
      * Check whether or not this leopard is to give birth at this step.
      * New births will be made into free adjacent locations.
      *
-     * @param newleopardes A list to return newly born leopardes.
+     * @param newLeopards A list to return newly born leopards.
      */
     @Override
-    protected void giveBirth(List<Organism> newleopardes, List<Location> adjacentLocations) {
+    protected void giveBirth(List<Organism> newLeopards, List<Location> adjacentLocations) {
+        // We get all adjacent locations and check if the animals is able to give a birth
+        // with some organism near it
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
             if (animal instanceof Leopard && ((Leopard) animal).isMale() != this.isMale()) {
                 // super.giveBirth calls the method inside Creature which gives birth
-                super.giveBirth(newleopardes, (field, location) -> new Leopard(false, field, location, random.nextBoolean()));
+                super.giveBirth(newLeopards, (field, location) -> new Leopard(false, field, location, random.nextBoolean()));
             }
         }
     }
