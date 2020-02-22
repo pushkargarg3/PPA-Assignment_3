@@ -11,7 +11,7 @@ import java.util.List;
  *
  * They can find food, become hungrier and age
  *
- * @author Andrian Stoykov, Pushkar Garg
+ * @author Andrian Stoykov, Pushkar Garg, Jonathan Rivera
  * @version 2020.02.13
  */
 public abstract class Eater extends Organism {
@@ -79,6 +79,7 @@ public abstract class Eater extends Organism {
      */
     protected void incrementHunger() {
         foodLevel--;
+        // kill animal when food level is negative
         if (foodLevel <= 0) {
             setDead();
         }
@@ -109,6 +110,9 @@ public abstract class Eater extends Organism {
 
     protected abstract void giveBirth(List<Organism> newOrganisms, List<Location> adjacentLocations);
 
+    /**
+     * @return List of adjacent locations.
+     */
     private List<Location> getLocationList() {
         Field field = getField();
         return field.adjacentLocations(getLocation());

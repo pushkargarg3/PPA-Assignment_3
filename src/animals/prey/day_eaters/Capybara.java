@@ -12,8 +12,7 @@ import java.util.Random;
 /**
  * A simple model of a capybara.
  * Capybaras age, move, breed, eat, and die.
- *
- * @author Andrian Stoykov, Jonathan Rivera
+ * @author Andrian Stoykov, Jonathan Rivera, Pushkar Garg
  * @version 2020.02.17
  */
 public class Capybara extends DayEater {
@@ -29,7 +28,7 @@ public class Capybara extends DayEater {
     private static final double INFECTED_PROBABILITY = 0.02;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-
+    // The food value of capybara
     private static final int CAPYBARA_FOOD_VALUE = 9;
 
     // Individual characteristics (instance fields).
@@ -78,6 +77,7 @@ public class Capybara extends DayEater {
     @Override
     protected void giveBirth(List<Organism> newCapybaras, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
+            // obtains organisms surrounding capybara
             Object organism = getField().getObjectAt(where);
             if (organism instanceof Capybara && ((Capybara) organism).isMale() != this.isMale()) {
                 // super.giveBirth calls the method inside Creature which gives birth

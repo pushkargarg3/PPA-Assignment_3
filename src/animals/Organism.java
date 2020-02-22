@@ -11,8 +11,8 @@ import java.util.Random;
 /**
  * A class representing shared characteristics of organism.
  *
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Jonathan Rivera, Andrian Stoykov, Pushkar Garg
+ * @version 2020.02.17
  */
 public abstract class Organism {
     // Whether the organism is alive or not.
@@ -223,8 +223,13 @@ public abstract class Organism {
         }
     }
 
+    /**
+     * Breeds a random number of animals of the same species.
+     * @return number of births
+     */
     private int breed() {
         int births = 0;
+        // generates random probability determining whether to give birth
         if (canBreed() && rand.nextDouble() <= breedingProbability) {
             births = rand.nextInt(maxLitterSize) + 1;
         }

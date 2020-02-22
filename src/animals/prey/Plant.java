@@ -12,7 +12,7 @@ import java.util.Random;
  * A simple model of a plant.
  * Plants age, breed and die.
  *
- * @author Jonathan Rivera
+ * @author Jonathan Rivera, Andrian Stoykov, Pushkar Garg
  * @version 2020.02.17
  */
 public class Plant extends Organism {
@@ -28,7 +28,7 @@ public class Plant extends Organism {
     private static final double INFECTED_PROBABILITY = 0.02;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-
+    // The food value of a plant
     private static final int PLANT_FOOD_VALUE = 5;
 
     private Random random;

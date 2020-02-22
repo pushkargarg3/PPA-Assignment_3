@@ -14,7 +14,7 @@ import java.util.Random;
  * They can also get infected by a virus and die     faster.
  * When its raining they hide
  *
- * @author Jonathan Rivera
+ * @author Jonathan Rivera, Andrian Stoykov, Pushkar Garg
  * @version 2020.02.17
  */
 public class Rat extends Organism {

@@ -45,6 +45,11 @@ public class Leopard extends Eater {
         random = new Random();
     }
 
+    /**
+     * Checks if leopard can eat the animal passed as an argument
+     * @param animal An organism object
+     * @return boolean of whether leopard can eat the organism
+     */
     @Override
     protected boolean canEatCreature(Object animal) {
         return animal instanceof Capybara || animal instanceof Rat;

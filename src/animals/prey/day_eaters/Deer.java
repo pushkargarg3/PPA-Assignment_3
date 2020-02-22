@@ -12,7 +12,7 @@ import java.util.Random;
  * A simple model of a deer.
  * Deers age, move, breed, eat, and die.
  *
- * @author Andrian Stoykov, Pushkar Garg
+ * @author Andrian Stoykov, Pushkar Garg, Jonathan Rivera
  * @version 2020.02.13
  */
 public class Deer extends DayEater {
@@ -28,10 +28,8 @@ public class Deer extends DayEater {
     private static final double INFECTED_PROBABILITY = 0.02;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // The amount of food that is going to gain the animal which eats the deer
+    // The food value of deers
     private static final int DEER_FOOD_VALUE = 18;
-
-    // Individual characteristics (instance fields).
 
     private Random random;
 
@@ -68,11 +66,10 @@ public class Deer extends DayEater {
         return DEER_FOOD_VALUE;
     }
 
-    @Override
-    public double getInfectedProbability() {
-        return INFECTED_PROBABILITY;
-    }
-
+    /**
+     * @param newDeers list of
+     * @param adjacentLocations
+     */
     @Override
     protected void giveBirth(List<Organism> newDeers, List<Location> adjacentLocations) {
         // We get all adjacent locations and check if the animals is able to give a birth
@@ -80,7 +77,7 @@ public class Deer extends DayEater {
         for (Location where : adjacentLocations) {
             Object organism = getField().getObjectAt(where);
             if (organism instanceof Deer && ((Deer) organism).isMale() != this.isMale()) {
-                // super.giveBirth calls the method inside Creature which gives birth
+                // super.giveBirth calls the method inside Organism which gives birth
                 super.giveBirth(newDeers, (field, location) -> new Deer(false, field, location, random.nextBoolean()));
             }
         }

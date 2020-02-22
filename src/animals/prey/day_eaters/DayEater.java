@@ -7,6 +7,10 @@ import field.Location;
 
 import java.util.List;
 
+/**
+ * Class for day eating animals
+ * @author Jonathan Rivera, Andrian Stoykov, Pushkar Garg
+ */
 public abstract class DayEater extends Eater {
 
     /**
@@ -47,10 +51,11 @@ public abstract class DayEater extends Eater {
             Field currentField = getField();
             List<Location> adjacent = currentField.adjacentLocations(getLocation());
             giveBirth(newOrganisms, adjacent);
+            // Infects other animals in close vicinity
             if(isInfected())
                 getInfector().infect(this, getField().adjacentLocations(getLocation()), getField());
             findFood();
-            // Try to move into a free location.
+            // Try to move into a free location if daytime
             if(this.isNight()) {
                 return;
             }
