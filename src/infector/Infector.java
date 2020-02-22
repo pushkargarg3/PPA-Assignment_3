@@ -7,6 +7,12 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The Infector class calculates the probability of every animal getting infected
+ *
+ * @author Jonathan Rivera
+ * @version 2020.02.17
+ */
 public class Infector {
     private Random random;
 

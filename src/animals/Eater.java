@@ -5,6 +5,15 @@ import field.Location;
 
 import java.util.List;
 
+/**
+ * The eater class extracts all the common logic
+ * for organism which can eat.
+ *
+ * They can find food, become hungrier and age
+ *
+ * @author Andrian Stoykov, Pushkar Garg
+ * @version 2020.02.13
+ */
 public abstract class Eater extends Organism {
 
     private int foodLevel;

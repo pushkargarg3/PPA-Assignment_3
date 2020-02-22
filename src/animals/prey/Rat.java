@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * A simple model of a rat.
  * Rats age, move, breed, eat, and die.
- * They can also get infected by a virus and die faster.
+ * They can also get infected by a virus and die     faster.
  * When its raining they hide
  *
  * @author Jonathan Rivera
