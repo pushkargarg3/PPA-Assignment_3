@@ -39,7 +39,7 @@ public class Rat extends Organism {
         super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
                     INFECTED_PROBABILITY);
         random = new Random();
-        isInfected = random.nextDouble() <= INFECTED_PROBABILITY;
+        setInfected(random.nextDouble() <= INFECTED_PROBABILITY);
     }
 
 
@@ -51,7 +51,7 @@ public class Rat extends Organism {
     public void act(List<Organism> newRats)
     {
         // If the animal is infected it dies faster
-        if (isInfected) {
+        if (isInfected()) {
             incrementAge();
         }
         incrementAge();
@@ -60,8 +60,8 @@ public class Rat extends Organism {
 
         if(isAlive()) {
             giveBirth(newRats);
-            if(isInfected)
-                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
+            if(isInfected())
+                getInfector().infect(this, getField().adjacentLocations(getLocation()), getField());
             //rats hide if raining and don't move
             if(!isHiding()) {
                 // Try to move into a free location.

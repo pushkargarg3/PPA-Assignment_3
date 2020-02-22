@@ -49,9 +49,9 @@ public abstract class Organism {
     // Indicates if hiding
     private boolean isHiding;
     // Indicates if infected
-    protected boolean isInfected;
+    private boolean isInfected;
     // Used to infect cross species
-    protected Infector infector;
+    private Infector infector;
 
     /**
      * Create a new animal at location in field.
@@ -109,11 +109,21 @@ public abstract class Organism {
         this.isRaining = isRaining;
     }
 
-    public void setHiding(boolean isHiding){
+    public void setHiding(boolean isHiding) {
         this.isHiding = isHiding;
     }
 
-    public void setInfected() {this.isInfected = true;}
+    public void setInfected(boolean infected) {
+        this.isInfected = infected;
+    }
+
+    public boolean isInfected() {
+        return isInfected;
+    }
+
+    public Infector getInfector() {
+        return infector;
+    }
 
     /**
      * Make this animal act - that is: make it do
@@ -201,7 +211,9 @@ public abstract class Organism {
 
     protected abstract int getFoodLevel();
 
-    public double getInfectedProbability() { return infectedProbability;}
+    public double getInfectedProbability() {
+        return infectedProbability;
+    }
 
     private void setAge(boolean isRandomAge) {
         if (isRandomAge) {

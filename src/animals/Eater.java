@@ -40,15 +40,15 @@ public abstract class Eater extends Organism {
     @Override
     public void act(List<Organism> newOrganisms) {
         // If the animal is infected it dies faster
-        if (isInfected) {
+        if (isInfected()) {
             incrementAge();
         }
         incrementAge();
         incrementHunger();
         if (isAlive()) {
             giveBirth(newOrganisms, getLocationList());
-            if(isInfected)
-                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
+            if(isInfected())
+                getInfector().infect(this, getField().adjacentLocations(getLocation()), getField());
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if (newLocation == null) {

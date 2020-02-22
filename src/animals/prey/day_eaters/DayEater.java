@@ -38,7 +38,7 @@ public abstract class DayEater extends Eater {
     public void act(List<Organism> newOrganisms)
     {
         // If the animal is infected it dies faster
-        if (isInfected) {
+        if (isInfected()) {
             incrementAge();
         }
         incrementAge();
@@ -47,8 +47,8 @@ public abstract class DayEater extends Eater {
             Field currentField = getField();
             List<Location> adjacent = currentField.adjacentLocations(getLocation());
             giveBirth(newOrganisms, adjacent);
-            if(isInfected)
-                infector.infect(this, getField().adjacentLocations(getLocation()), getField());
+            if(isInfected())
+                getInfector().infect(this, getField().adjacentLocations(getLocation()), getField());
             findFood();
             // Try to move into a free location.
             if(this.isNight()) {

@@ -25,11 +25,11 @@ public class Infector {
             if (thisAnimal.getClass() == animal.getClass()) {
                 //probability of infection is double
                 if (rand <= animal.getInfectedProbability() * 3) {
-                    animal.setInfected();
+                    animal.setInfected(true);
                 }
             }
             if (rand <= animal.getInfectedProbability()) {
-                animal.setInfected();
+                animal.setInfected(true);
             }
         }
     }
