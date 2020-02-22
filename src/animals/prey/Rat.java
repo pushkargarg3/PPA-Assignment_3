@@ -22,7 +22,7 @@ public class Rat extends Organism {
     // The probability of rat being infected
     private static final double INFECTED_PROBABILITY = 0.05;
 
-    private final int RAT_FOOD_VALUE = 2;
+    private static final int RAT_FOOD_VALUE = 2;
 
     private Random random;
 
@@ -76,18 +76,6 @@ public class Rat extends Organism {
 
         }
     }
-
-//    private void infect() {
-//        Field currentField = getField();
-//        List<Location> adjacent = currentField.adjacentLocations(getLocation());
-//
-//        for (Location where : adjacent) {
-//            Object animal = getField().getObjectAt(where);
-//            if (animal instanceof Rat && random.nextDouble() <= INFECTED_PROBABILITY) {
-//                ((Rat) animal).isInfected = true;
-//            }
-//        }
-//    }
 
     /**
      *

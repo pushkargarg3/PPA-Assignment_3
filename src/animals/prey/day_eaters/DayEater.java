@@ -16,7 +16,7 @@ public abstract class DayEater extends Eater {
      * @param isRandomAge         If the age should be randomly assigned
      * @param field               The field currently occupied.
      * @param location            The location within the field.
-     * @param isMale              SHows if the predator is male or not
+     * @param isMale              Shows if the predator is male or not
      * @param breedingProbability The probability to breed
      * @param maxLitterSize       The maximum number of children
      * @param maxAge              The maximum age of the predator

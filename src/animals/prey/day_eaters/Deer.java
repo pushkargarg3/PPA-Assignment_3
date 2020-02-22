@@ -8,6 +8,13 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A simple model of a deer.
+ * Deers age, move, breed, eat, and die.
+ *
+ * @author Andrian Stoykov, Pushkar Garg
+ * @version 2020.02.13
+ */
 public class Deer extends DayEater {
     // Characteristics shared by all deers (class variables).
 
@@ -21,8 +28,8 @@ public class Deer extends DayEater {
     private static final double INFECTED_PROBABILITY = 0.02;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-
-    private final int DEER_FOOD_VALUE = 18;
+    // The amount of food that is going to gain the animal which eats the deer
+    private static final int DEER_FOOD_VALUE = 18;
 
     // Individual characteristics (instance fields).
 
@@ -42,9 +49,15 @@ public class Deer extends DayEater {
         random = new Random();
     }
 
+    /**
+     * The deer can eat only plants
+     *
+     * @param organism organism which is passed by the Eater class
+     * @return true if the organism is a Plant
+     */
     @Override
-    protected boolean canEatCreature(Object creature) {
-        return creature instanceof Plant;
+    protected boolean canEatCreature(Object organism) {
+        return organism instanceof Plant;
     }
 
     /**
@@ -56,13 +69,15 @@ public class Deer extends DayEater {
     }
 
     @Override
-    public double getInfectedProbability() {return INFECTED_PROBABILITY;}
+    public double getInfectedProbability() {
+        return INFECTED_PROBABILITY;
+    }
 
     @Override
     protected void giveBirth(List<Organism> newDeers, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
-            Object animal = getField().getObjectAt(where);
-            if (animal instanceof Deer && ((Deer) animal).isMale() != this.isMale()) {
+            Object organism = getField().getObjectAt(where);
+            if (organism instanceof Deer && ((Deer) organism).isMale() != this.isMale()) {
                 // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newDeers, (field, location) -> new Deer(false, field, location, random.nextBoolean()));
             }

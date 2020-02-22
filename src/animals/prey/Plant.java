@@ -8,6 +8,13 @@ import field.Location;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A simple model of a plant.
+ * Plants age, breed and die.
+ *
+ * @author Jonathan Rivera
+ * @version 2020.02.17
+ */
 public class Plant extends Organism {
     // Characteristics shared by all plants (class variables).
 
@@ -27,7 +34,7 @@ public class Plant extends Organism {
     private Random random;
 
     /**
-     * Create a new animal at location in field.
+     * Create a new plant at location in field.
      *
      * @param isRandomAge if the Plant should be instantiated with random age
      * @param field       The field currently occupied.
@@ -40,8 +47,8 @@ public class Plant extends Organism {
     }
 
     /**
-     * This is what the plant does most of the time - it runs
-     * around. Sometimes it will breed or die of old age.
+     * This is what the plant does most of the time - it does nothing.
+     * Sometimes it will breed or die of old age.
      *
      * @param newPlants A list to return newly born plants.
      */
@@ -74,8 +81,8 @@ public class Plant extends Organism {
         List<Location> adjacent = currentField.adjacentLocations(getLocation());
 
         for (Location where : adjacent) {
-            Object animal = getField().getObjectAt(where);
-            if (animal instanceof Plant) {
+            Object organism = getField().getObjectAt(where);
+            if (organism instanceof Plant) {
                 AnimalCreator creator = (field, location) -> new Plant(false, field, location, random.nextBoolean());
                 // super.giveBirth calls the method inside Creature which gives birth
                 super.giveBirth(newPlants, creator);

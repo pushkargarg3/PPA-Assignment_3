@@ -3,7 +3,7 @@ package simulator;
 import animals.*;
 import animals.prey.day_eaters.Deer;
 import animals.prey.Plant;
-import animals.prey.day_eaters.Rabbit;
+import animals.prey.day_eaters.Capybara;
 import animals.prey.Rat;
 import field.Field;
 import field.Location;
@@ -80,10 +80,10 @@ public class Simulator {
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.MAGENTA);
+        view.setColor(Capybara.class, Color.MAGENTA);
         view.setColor(Deer.class, Color.YELLOW);
         view.setColor(Rat.class, Color.GRAY);
-        view.setColor(Fox.class, Color.RED);
+        view.setColor(Leopard.class, Color.RED);
         view.setColor(Tiger.class, Color.ORANGE);
         view.setColor(Plant.class, Color.GREEN);
 
@@ -189,11 +189,11 @@ public class Simulator {
                 boolean isMale = rand.nextBoolean();
                 if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location, isMale);
-                    organisms.add(fox);
+                    Leopard leopard = new Leopard(true, field, location, isMale);
+                    organisms.add(leopard);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Organism rabbit = new Rabbit(true, field, location, isMale);
+                    Organism rabbit = new Capybara(true, field, location, isMale);
                     organisms.add(rabbit);
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);

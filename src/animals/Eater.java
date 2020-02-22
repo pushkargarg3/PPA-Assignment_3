@@ -34,7 +34,6 @@ public abstract class Eater extends Organism {
             int breedingAge,
             double infectedProbability) {
         super(isRandomAge, field, location, isMale, breedingProbability, maxLitterSize, maxAge, breedingAge, infectedProbability);
-        // TODO: Somehow we should get initial food level??
         foodLevel = 40;
     }
 

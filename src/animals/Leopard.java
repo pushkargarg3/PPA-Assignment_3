@@ -1,6 +1,6 @@
 package animals;
 
-import animals.prey.day_eaters.Rabbit;
+import animals.prey.day_eaters.Capybara;
 import animals.prey.Rat;
 import field.Field;
 import field.Location;
@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a fox.
+ * A simple model of a leopard.
  * Foxes age, move, eat rabbits, and die.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Fox extends Eater {
+public class Leopard extends Eater {
     // Characteristics shared by all foxes (class variables).
 
     // The age at which a fox can start to breed.
@@ -38,7 +38,7 @@ public class Fox extends Eater {
      * @param field     The field currently occupied.
      * @param location  The location within the field.
      */
-    public Fox(boolean randomAge, Field field, Location location, boolean isMale) {
+    public Leopard(boolean randomAge, Field field, Location location, boolean isMale) {
         super(randomAge, field, location, isMale, BREEDING_PROBABILITY, MAX_LITTER_SIZE, MAX_AGE, BREEDING_AGE,
                 INFECTED_PROBABILITY);
         random = new Random();
@@ -46,7 +46,7 @@ public class Fox extends Eater {
 
     @Override
     protected boolean canEatCreature(Object animal) {
-        return animal instanceof Rabbit || animal instanceof Rat;
+        return animal instanceof Capybara || animal instanceof Rat;
     }
 
     /**
@@ -59,9 +59,9 @@ public class Fox extends Eater {
     protected void giveBirth(List<Organism> newFoxes, List<Location> adjacentLocations) {
         for (Location where : adjacentLocations) {
             Object animal = getField().getObjectAt(where);
-            if (animal instanceof Fox && ((Fox) animal).isMale() != this.isMale()) {
+            if (animal instanceof Leopard && ((Leopard) animal).isMale() != this.isMale()) {
                 // super.giveBirth calls the method inside Creature which gives birth
-                super.giveBirth(newFoxes, (field, location) -> new Fox(false, field, location, random.nextBoolean()));
+                super.giveBirth(newFoxes, (field, location) -> new Leopard(false, field, location, random.nextBoolean()));
             }
         }
     }
