@@ -1,5 +1,6 @@
 package animals;
 
+import animals.prey.Plant;
 import animals.prey.day_eaters.Capybara;
 import animals.prey.Rat;
 import field.Field;
@@ -51,8 +52,8 @@ public class Leopard extends Eater {
      * @return boolean of whether leopard can eat the organism
      */
     @Override
-    protected boolean canEatCreature(Object animal) {
-        return animal instanceof Capybara || animal instanceof Rat;
+    protected boolean canEatCreature(Object organism) {
+        return organism instanceof Capybara || organism instanceof Rat;
     }
 
     /**

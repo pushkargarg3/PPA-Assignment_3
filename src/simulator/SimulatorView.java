@@ -3,9 +3,8 @@ package simulator;
 import field.Field;
 import field.FieldStats;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
