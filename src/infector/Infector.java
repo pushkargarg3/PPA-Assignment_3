@@ -11,7 +11,7 @@ import java.util.Random;
  * The Infector class deals with spreading diseases between the same and
  * differing species of organisms.
  *
- * @authors Jonathan Rivera, Andrian Stokyov, Pushkar Garg
+ * @author Jonathan Rivera, Andrian Stoykov, Pushkar Garg
  * @version 2020.02.17
  */
 public class Infector {
